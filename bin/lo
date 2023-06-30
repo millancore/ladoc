@@ -1,0 +1,16 @@
+#!/usr/bin/env php
+<?php
+
+require dirname(__DIR__) . '/bootstrap.php';
+
+use Symfony\Component\Console\Application;
+
+$application = new Application();
+
+$searchCommand = new \Lo\SearchCommand();
+
+
+$application->add($searchCommand);
+$application->setDefaultCommand($searchCommand->getName(), true);
+
+$application->run();
