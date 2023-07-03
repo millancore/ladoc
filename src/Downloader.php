@@ -6,7 +6,6 @@ use Symfony\Component\Process\Process;
 
 class Downloader
 {
-
     //check if git is installed
     public function checkGit()
     {
@@ -24,13 +23,13 @@ class Downloader
         $branchName = '10.x'; // Replace with the desired branch name
         $targetDirectory =  ROOT_APP.'/.docs/'.$branchName;
 
-// Create the process instance
+        // Create the process instance
         $process = new Process(['git', 'clone', '--branch', $branchName, $repositoryUrl, $targetDirectory]);
 
-// Run the process
+        // Run the process
         $process->run();
 
-// Check if the process was successful
+        // Check if the process was successful
         if ($process->isSuccessful()) {
             // Repository cloned successfully
             echo 'Repository cloned successfully.';

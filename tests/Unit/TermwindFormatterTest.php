@@ -2,8 +2,8 @@
 
 namespace Lo\Tests\Unit;
 
+use Lo\Formatter\TermwindFormatter;
 use Lo\Styles;
-use Lo\TermwindFormatter;
 
 class TermwindFormatterTest extends TestCase
 {

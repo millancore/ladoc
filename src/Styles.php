@@ -4,14 +4,13 @@ namespace Lo;
 
 class Styles
 {
-
-    public string $titleStyles;
-    public string $inlineCodeStyles;
+    public string $title;
+    public string $inlineCode;
 
     public function __construct(array $styles)
     {
-        $this->titleStyles = $styles['title'];
-        $this->inlineCodeStyles = $styles['inline-code'];
+        $this->title = $styles['title'];
+        $this->inlineCode = $styles['inline-code'];
     }
 
 

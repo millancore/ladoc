@@ -12,7 +12,7 @@ readonly class Settings
     public function __construct(array $settings)
     {
         $this->repositoryUrl = $settings['repository'];
-        $this->docPath = $settings['doc_path'];
+        $this->docPath = $settings['docs_path'];
         $this->indexPath = $settings['index_path'];
 
     }

@@ -2,4 +2,7 @@
 
 require __DIR__.'/vendor/autoload.php';
 
-define('ROOT_APP', __DIR__);
+const ROOT_APP = __DIR__;
+
+const DOC_DIR = ROOT_APP . '/.docs';
+const INDEX_DIR = ROOT_APP . '/index';

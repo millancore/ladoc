@@ -2,29 +2,34 @@
 
 namespace Lo;
 
-
 use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Exception\CommonMarkException;
+use Lo\Formatter\FormatterInterface;
+use Lo\Index\IndexList;
 
 readonly class Indexer
 {
+    private IndexList $mainIndex;
+
 
     public function __construct(
         private FileManager         $fileManager,
+        private FormatterInterface $formatter,
         private CommonMarkConverter $converter
-    )
-    {
-        //
+    ) {
+        $this->mainIndex = new IndexList();
     }
 
     /**
      * @throws CommonMarkException
      */
-    public function createIndexForVersion()
+    public function createIndexForVersion(): void
     {
         // validate if version doc folder exist
         if (!$this->fileManager->versionDocumentFolderExist()) {
             // download version for repo
+            //dump('exit');
+            //die;
         }
 
         //read files for version folder
@@ -34,15 +39,13 @@ readonly class Indexer
         foreach ($files as $file) {
             $this->createIndexByFile($file);
         }
-
     }
-
 
     /**
      * @throws CommonMarkException
      * @throws \Exception
      */
-    public function createIndexByFile(string $file) : void
+    public function createIndexByFile(string $file): void
     {
         $markdownContent = $this->fileManager->getFileContent($file);
 
@@ -55,38 +58,45 @@ readonly class Indexer
             'collection-method-list'
         ], '', $html);
 
-        $formatter = new TermwindFormatter(
-            new Styles([
-                    'title' => 'bg-teal-500',
-                    'inline-code' => 'bg-gray-500',
-                ]
-            )
-        );
+        $splitter = new Splitter($section, $html, $this->formatter);
 
-        $html = $formatter->format($html);
+        if ($splitter->getTitle()) {
+            $this->mainIndex->attach($splitter->getTitle());
+        }
 
-        $splitter = new Splitter($html);
+        $sectionArticles = $splitter->splitArticles();
 
-        $splitHTML = $splitter->splitSections();
+        $this->saveSectionIndex($section, $splitter);
+        $this->saveSectionArticles($section, $sectionArticles);
+    }
 
-        $this->saveIndexSection($section, $splitHTML);
 
+    public function getMainIndex(): IndexList
+    {
+        return $this->mainIndex;
     }
 
 
     /**
      * @throws \Exception
      */
-    public function saveIndexSection(string $section, array $articles) : void
+    public function saveSectionIndex(string $section, Splitter $splitter)
+    {
+        $indexSection = $splitter->getIndexList();
+
+        $this->fileManager->saveSectionIndex($section, $indexSection->getAsArrayFile());
+    }
+
+
+    /**
+     * @throws \Exception
+     */
+    public function saveSectionArticles(string $section, array $articles): void
     {
         foreach ($articles as $name => $content) {
             $filename = strtolower($name) . '.html';
 
-            $this->fileManager->saveIndexSection(
-                $section,
-                $filename,
-                $content
-            );
+            $this->fileManager->saveSectionArticle($section, $filename, $content);
         }
     }
 

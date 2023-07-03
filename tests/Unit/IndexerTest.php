@@ -3,10 +3,10 @@
 namespace Lo\Tests\Unit;
 
 use League\CommonMark\CommonMarkConverter;
+use Lo\Enum\Version;
 use Lo\FileManager;
 use Lo\Indexer;
 use Lo\Settings;
-use Lo\Version;
 
 class IndexerTest extends TestCase
 {

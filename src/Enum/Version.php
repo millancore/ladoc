@@ -1,6 +1,6 @@
 <?php
 
-namespace Lo;
+namespace Lo\Enum;
 
 enum Version: string
 {
@@ -23,26 +23,26 @@ enum Version: string
     case V4_0 = '4.0';
 
     public static function getLatestVersion(): Version
-   {
-       return self::V10;
-   }
+    {
+        return self::V10;
+    }
 
     /**
      * @throws \Exception
      */
     public static function fromValue(int|float|string $version): Version
-   {
-       if(is_numeric($version) && $version >= 6) {
-           $version = $version . '.x';
-       }
+    {
+        if(is_numeric($version) && $version >= 6) {
+            $version = $version . '.x';
+        }
 
-       foreach (self::cases() as $case){
-              if($case->value === (string) $version) {
+        foreach (self::cases() as $case) {
+            if($case->value === (string) $version) {
                 return $case;
-              }
-       }
+            }
+        }
 
-         throw new \Exception(sprintf('Version %s not found', $version));
-   }
+        throw new \Exception(sprintf('Version %s not found', $version));
+    }
 
 }

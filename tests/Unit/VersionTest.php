@@ -2,7 +2,7 @@
 
 namespace Lo\Tests\Unit;
 
-use Lo\Version;
+use Lo\Enum\Version;
 
 class VersionTest extends TestCase
 {

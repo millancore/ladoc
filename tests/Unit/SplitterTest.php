@@ -21,7 +21,7 @@ HTML;
 
         $splitter = new Splitter($htmlContent);
 
-        $sections = $splitter->splitSections();
+        $sections = $splitter->splitArticles();
 
         $this->assertCount(2, $sections);
         $this->assertEquals('test-1', array_key_first($sections));

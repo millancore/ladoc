@@ -2,9 +2,9 @@
 
 namespace Lo\Tests\Unit;
 
+use Lo\Enum\Version;
 use Lo\FileManager;
 use Lo\Settings;
-use Lo\Version;
 
 class FileManagerTest extends TestCase
 {
@@ -33,7 +33,7 @@ class FileManagerTest extends TestCase
     {
         $fileManager = new FileManager(Version::V10, $this->getSettings());
 
-        $fileManager->saveIndexSection(
+        $fileManager->saveSectionArticle(
             'validation',
             'test.html',
             'content'
