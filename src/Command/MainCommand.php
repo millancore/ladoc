@@ -82,35 +82,9 @@ class MainCommand extends Command
 
 
 
-        // search in content file using preg and Symfony process, return file name
-        $process = new Process([
-            'grep',
-            '-rl',
-            ROOT_APP . '/index/' . $version . '/' . $section,
-            '-ie',
-            implode(' ', $query)
-        ]);
-        $process->run();
-
-        // process output as array
-        $output = explode("\n", $process->getOutput());
-
-        //remove empty values
-        $output = array_filter($output);
-
-        // array reverse
-        $output = array_reverse($output);
 
 
-        $content = '';
-        foreach ($output as $file) {
-            $content .= file_get_contents($file);
-            $content .= '<hr>';
-        }
 
-        $content = trim($content, '<hr>');
-
-        (new Termwind($this->styles))->render($content);
 
         return Command::SUCCESS;
     }
