@@ -2,12 +2,11 @@
 
 namespace Lo\Command;
 
-use League\CommonMark\CommonMarkConverter;
 use Lo\Enum\Version;
 use Lo\FileManager;
-use Lo\Formatter\TermwindFormatter;
-use Lo\Indexer;
-use Lo\Settings;
+use Lo\Index\IndexManager;
+use Lo\InputResolver;
+use Lo\Repository;
 use Lo\Styles;
 use Lo\Termwind;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -22,17 +21,15 @@ use Symfony\Component\Process\Process;
 )]
 class MainCommand extends Command
 {
-    public function __construct(
-        private readonly Settings $settings,
-        private readonly Styles $styles
-    ) {
-        parent::__construct();
-    }
-
     public function configure(): void
     {
 
-        $this->addArgument('section', InputArgument::REQUIRED, 'Section name');
+        $this->addArgument(
+            'section',
+            InputArgument::OPTIONAL,
+            'Section name',
+            'list'
+        );
 
         $this->addArgument(
             'query',
@@ -53,33 +50,43 @@ class MainCommand extends Command
     {
         $section = $input->getArgument('section');
         $query = $input->getArgument('query');
-        $version = $input->getOption('branch');
+        $versionInput = $input->getOption('branch');
 
+
+        $version = Version::fromValue($versionInput);
         $fileManager = new FileManager(
-            Version::fromValue($version),
-            $this->settings
+            ROOT_APP . '/.docs',
+            ROOT_APP . '/index',
         );
 
-        //        if (!$fileManager->versionIndexFolderExist()) {
-        $indexer = new Indexer(
-            $fileManager,
-            new TermwindFormatter(),
-            new CommonMarkConverter()
-        );
+        $indexManager = new IndexManager($version, $fileManager);
 
-        $indexer->createIndexForVersion();
+        if (!$indexManager->check()) {
+            $repository = new Repository($version, $fileManager);
+            $indexManager->createIndex($repository);
+        }
+
+        $inputResolver = new InputResolver($indexManager);
+
+        $content = $inputResolver->resolve($section, $query);
+
+        (new Termwind(
+            new Styles(require ROOT_APP. '/styles.php')
+        ))->render($content);
 
 
-        dd($indexer->getMainIndex());
+        return Command::SUCCESS;
 
-        //        }
+
+
+
 
 
         // search in content file using preg and Symfony process, return file name
         $process = new Process([
             'grep',
             '-rl',
-            ROOT_APP.'/index/'.$version.'/'.$section,
+            ROOT_APP . '/index/' . $version . '/' . $section,
             '-ie',
             implode(' ', $query)
         ]);
@@ -105,7 +112,7 @@ class MainCommand extends Command
 
         (new Termwind($this->styles))->render($content);
 
-        return  Command::SUCCESS;
+        return Command::SUCCESS;
     }
 
 }

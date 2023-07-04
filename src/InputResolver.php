@@ -12,9 +12,8 @@ namespace Lo;
   */
 
 use Exception;
-use Lo\Action\EmptyAction;
+use Lo\Action\ActionInterface;
 use Lo\Index\IndexManager;
-use Lo\Index\Render;
 
 class InputResolver
 {
@@ -30,57 +29,40 @@ class InputResolver
      */
     public function resolve(string $section, array $query, array $options = []): string
     {
-        $action = new EmptyAction();
-
-        if($section === 'list') {
-            $action = new Action\ListAction($this->indexManager);
+        if (is_numeric($section)) {
+            $section = $this->indexManager->getMainIndex()->get($section)->anchor;
         }
 
-        if (empty($query)) {
-            $action = new Action\SectionListAction($this->indexManager, $section);
-        }
-
-        if ($this->queryHasOnlyNumber($query)) {
-            $action = new Action\SectionIndexAction($this->indexManager, $section);
-        }
-
-        if ($action instanceof EmptyAction) {
-            $action = new Action\SectionQueryAction($this->indexManager, $section);
-        }
-
+        $action = $this->actions($section, $query);
         return $action->execute($query, $options);
     }
 
-
-    /**
-     * @throws Exception
-     */
-    public function section(string $section, array $query)
+    private function actions(string $section, array $query): ActionInterface
     {
-        // check if section is a valid section
-        $indexSection = $this->indexManager->getIndexSection($section);
-
-        $isNumericQuery = $this->queryHasOnlyNumber($query);
-
-        if ($isNumericQuery) {
-            $itemList = $indexSection->getNestedItems($query);
-
-            return Render::sectionIndexList($itemList);
+        if ($section === 'list') {
+            return new Action\ListAction($this->indexManager);
         }
 
+        if (empty($query)) {
+            return new Action\SectionListAction($this->indexManager, $section);
+        }
 
+        if ($this->queryHasOnlyNumber($query)) {
+            return new Action\SectionIndexAction($this->indexManager, $section);
+        }
 
-
+        return new Action\SectionQueryAction($this->indexManager, $section);
     }
+
 
     private function queryHasOnlyNumber(array $query): bool
     {
+        if (empty($query)) {
+            return false;
+        }
+
         return !in_array(false, array_map(fn ($item) => is_numeric($item), $query));
     }
-
-
-
-
 
 
 }

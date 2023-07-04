@@ -2,86 +2,43 @@
 
 namespace Lo;
 
-use Lo\Enum\Version;
-
 class FileManager
 {
     public function __construct(
-        private Version $version,
-        private Settings $settings,
+        public readonly string $docsPath,
+        public readonly string $indexPath
     ) {
         //
     }
 
-    public function versionDocumentFolderExist(): bool
+    public function folderExist(string $path): bool
     {
-        return is_dir($this->getVersionDocumentPath());
+        return is_dir($path);
     }
 
-    public function versionIndexFolderExist(): bool
+    public function fileExist(string $path): bool
     {
-        return is_dir($this->getVersionIndexPath());
+        return is_file($path);
     }
 
-    private function getVersionIndexPath(): string
+    /**
+     * @param string $path
+     * @param array $exclude
+     * @return array [string]
+     */
+    public function getFolderFiles(string $path, array $exclude = []): array
     {
-        return $this->settings->indexPath . '/' . $this->version->value;
-    }
+        $excludeFiles = ['.', '..'];
 
-    public function sectionExist(string $section): bool
-    {
-        return is_dir($this->getVersionIndexPath() . '/' . $section);
-    }
+        if (!$this->folderExist($path)) {
+            return [];
+        }
 
-    public function getVersionDocumentPath(): string
-    {
-        return $this->settings->docPath . '/' . $this->version->value;
-    }
+        $exclude = array_merge($exclude, $excludeFiles);
 
-    public function getVersionFiles(): array
-    {
-        $path = $this->getVersionDocumentPath();
-
-        $files = array_filter(scandir($path), fn ($file) => !in_array($file, [
-            '.',
-            '..',
-            '.git',
-            'index.php'
-        ]));
+        $files = array_filter(scandir($path), fn ($file) => !in_array($file, $exclude));
 
         return array_map(fn ($file) => $path . '/' . $file, $files);
-    }
-
-    /**
-     * @throws \Exception
-     */
-    public function saveSectionArticle(string $article, string $filename, string $content): void
-    {
-        $path = sprintf(
-            '%s/%s/%s/%s',
-            $this->settings->indexPath,
-            $this->version->value,
-            $article,
-            $filename
-        );
-
-        $this->save($path, $content);
-    }
-
-    /**
-     * @throws \Exception
-     */
-    public function saveSectionIndex(string $section, string $indexAsArrayFile): void
-    {
-        $path = sprintf(
-            '%s/%s/%s/%s',
-            $this->settings->indexPath,
-            $this->version->value,
-            $section,
-            $section.'.php'
-        );
-
-        $this->save($path, $indexAsArrayFile);
     }
 
     /**

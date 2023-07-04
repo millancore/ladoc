@@ -4,16 +4,11 @@
 require dirname(__DIR__) . '/bootstrap.php';
 
 use Lo\Command\MainCommand;
-use Lo\Settings;
-use Lo\Styles;
 use Symfony\Component\Console\Application;
 
 $application = new Application();
 
-$searchCommand = new MainCommand(
-        new Settings(require ROOT_APP. '/config/settings.php'),
-        new Styles(require ROOT_APP. '/config/styles.php')
-);
+$searchCommand = new MainCommand;
 
 $application->add($searchCommand);
 $application->setDefaultCommand($searchCommand->getName(), true);

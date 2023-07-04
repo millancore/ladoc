@@ -22,5 +22,12 @@
         "symfony/var-dumper": "^6.3",
         "friendsofphp/php-cs-fixer": "^3.20",
         "phpstan/phpstan": "^1.10"
+    },
+    "scripts": {
+        "test": "phpunit",
+        "cs": "php-cs-fixer fix src --rules=@PSR12 --dry-run --diff",
+        "cs-fix": "php-cs-fixer fix src --rules=@PSR12",
+        "phpstan": "phpstan analyse --level=8 src tests",
+        "phpstan-baseline": "phpstan analyse --level=8 src tests --generate-baseline phpstan-baseline.neon"
     }
 }

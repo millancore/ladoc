@@ -16,16 +16,17 @@ readonly class Splitter
     public function __construct(
         private string $section,
         private string $htmlContent,
-        private FormatterInterface $formatter
     ) {
         $this->domDocument = new DOMDocument();
-        $this->domDocument->loadHTML($htmlContent);
+        @$this->domDocument->loadHTML($htmlContent);
     }
 
-    public function splitArticles(): array
+    public function splitArticles(FormatterInterface $formatter): array
     {
+        $htmlContent = $formatter->format($this->htmlContent);
+
         $domDocument = new DOMDocument();
-        $domDocument->loadHTML($this->formatter->format($this->htmlContent));
+        @$domDocument->loadHTML($htmlContent);
 
         $xpath = new DOMXPath($domDocument);
 
@@ -74,7 +75,7 @@ readonly class Splitter
             return null;
         }
 
-        return new ItemList($firstTitle->nodeValue, $this->section, new IndexList());
+        return new ItemList($firstTitle->nodeValue, $this->section);
     }
 
 
@@ -90,8 +91,16 @@ readonly class Splitter
     {
         $result = new IndexList();
 
+        if (!$list) {
+            return $result;
+        }
+
         foreach ($list->childNodes as $item) {
             if ($item->nodeName === 'li') {
+
+                if(empty($item->nodeValue)) {
+                    continue;
+                }
 
                 $children = $item->getElementsByTagName('ul');
                 $anchor = $item->getElementsByTagName('a');
@@ -100,12 +109,7 @@ readonly class Splitter
 
                 $value = $anchor[0]->nodeValue;
 
-                $sub = new IndexList();
-                if ($children->length > 0) {
-                    $sub->attach($this->parseList($children[0]));
-                }
-
-                $result->attach(new ItemList($value, $key, $sub));
+                $result->attach(new ItemList($value, $key, $this->parseList($children[0])));
             }
         }
 

@@ -2,7 +2,9 @@
 
 namespace Lo\Action;
 
+use Lo\Index\IndexList;
 use Lo\Index\IndexManager;
+use Lo\Index\Render;
 
 class SectionIndexAction implements ActionInterface
 {
@@ -15,6 +17,14 @@ class SectionIndexAction implements ActionInterface
 
     public function execute(array $query, array $options = []): string
     {
-        // TODO: Implement execute() method.
+        $section = $this->indexManager->getSectionIndex($this->section);
+
+        $element = $section->getNestedItems($query);
+
+        if ($element instanceof IndexList) {
+            return  Render::sectionIndexList($element);
+        }
+
+        return  $this->indexManager->getArticle($this->section, $element->anchor);
     }
 }

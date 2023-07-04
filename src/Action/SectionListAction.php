@@ -16,7 +16,7 @@ readonly class SectionListAction implements ActionInterface
 
     public function execute(array $query, array $options = []): string
     {
-        $indexSection = $this->indexManager->getIndexSection($this->section);
+        $indexSection = $this->indexManager->getSectionIndex($this->section);
 
         return Render::sectionIndexList($indexSection);
     }

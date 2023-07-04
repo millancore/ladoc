@@ -9,7 +9,7 @@ class Render
         $html = '<ul>';
         foreach ($indexList->all() as $index => $item) {
             $html .= '<li>';
-            $html .= sprintf('[%d] %s <%s>', $index, $item->title, $item->anchor);
+            $html .= sprintf('[%d] %s (%s)', $index, $item->title, $item->anchor);
             $html .= '</li>';
         }
 

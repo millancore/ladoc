@@ -18,6 +18,11 @@ class IndexList
         return count($this->items);
     }
 
+    public function isEmpty(): bool
+    {
+        return empty($this->items);
+    }
+
     public function get(int $index): ItemList
     {
         return $this->items[$index];
@@ -34,8 +39,10 @@ class IndexList
     }
 
 
-    public function getNestedItems(array $query): ItemList
+    public function getNestedItems(array $query): IndexList|ItemList
     {
+        $count = count($query);
+
         /** @var ItemList $firstElement */
         $firstElement = $this->items[$query[0]];
 
@@ -43,6 +50,18 @@ class IndexList
             return $firstElement;
         }
 
-        return $firstElement->children->getNestedItems(array_slice($query, 1));
+        /** @var IndexList $children */
+        $children = $firstElement->children;
+
+        if ($children->count() == 1 && $count == 1) {
+            return $children->get(0);
+        }
+
+        if($count == 1) {
+            return $children;
+        }
+
+
+        return $children->getNestedItems(array_slice($query, 1));
     }
 }
