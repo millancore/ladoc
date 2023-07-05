@@ -2,6 +2,7 @@
 
 namespace Lo\Command;
 
+use League\CommonMark\Exception\CommonMarkException;
 use Lo\Enum\Version;
 use Lo\FileManager;
 use Lo\Index\IndexManager;
@@ -14,7 +15,6 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Process\Process;
 
 #[AsCommand(
     name: 'search'
@@ -44,8 +44,20 @@ class MainCommand extends Command
             'Laravel version branch',
             Version::getLatestVersion()->value
         );
+
+        $this->addOption(
+            'letter',
+            'l',
+            InputArgument::OPTIONAL,
+            'Filter Main list by letter',
+            ''
+        );
     }
 
+    /**
+     * @throws \Exception
+     * @throws CommonMarkException
+     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $section = $input->getArgument('section');
@@ -54,37 +66,32 @@ class MainCommand extends Command
 
 
         $version = Version::fromValue($versionInput);
+
         $fileManager = new FileManager(
+            $version,
             ROOT_APP . '/.docs',
             ROOT_APP . '/index',
         );
 
-        $indexManager = new IndexManager($version, $fileManager);
+        $indexManager = new IndexManager($fileManager);
 
         if (!$indexManager->check()) {
-            $repository = new Repository($version, $fileManager);
-            $indexManager->createIndex($repository);
+            (new Repository($fileManager))->check();
+            $indexManager->createIndex();
         }
 
         $inputResolver = new InputResolver($indexManager);
 
-        $content = $inputResolver->resolve($section, $query);
+        $action = $inputResolver->resolve($section, $query);
+
+        $content = $action->execute(
+           $query,
+           ['letter' => $input->getOption('letter')]
+        );
 
         (new Termwind(
-            new Styles(require ROOT_APP. '/styles.php')
+            new Styles(require ROOT_APP . '/styles.php')
         ))->render($content);
-
-
-        return Command::SUCCESS;
-
-
-
-
-
-
-
-
-
 
         return Command::SUCCESS;
     }

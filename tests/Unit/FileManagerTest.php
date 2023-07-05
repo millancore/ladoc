@@ -3,23 +3,60 @@
 namespace Lo\Tests\Unit;
 
 use Lo\Enum\Version;
+use Lo\Exception\FileManagerException;
 use Lo\FileManager;
-use Lo\Settings;
 
+/**
+ * @covers \Lo\FileManager
+ */
 class FileManagerTest extends TestCase
 {
-    public function test_validate_if_branch_folder_exist()
+    public function test_get_index_path() : void
     {
-        $fileManager = new FileManager(Version::V10, $this->getSettings());
+        $fileManager = $this->newFileManager();
 
-        $this->assertTrue($fileManager->versionDocumentFolderExist());
+        $this->assertEquals(ROOT_TEST.'/data/index/10.x', $fileManager->getIndexPath());
     }
 
-    public function test_get_files_from_branch_folder()
+    public function test_get_doc_path() : void
     {
-        $fileManager = new FileManager(Version::V10, $this->getSettings());
+        $fileManager = $this->newFileManager();
 
-        $files = $fileManager->getVersionFiles();
+        $this->assertEquals(ROOT_TEST.'/data/.docs/10.x', $fileManager->getDocPath());
+    }
+
+    public function test_get_version() : void
+    {
+        $fileManager = $this->newFileManager();
+
+        $this->assertEquals(Version::V10, $fileManager->getVersion());
+    }
+
+    public function test_get_file_content() : void
+    {
+        $fileManager = $this->newFileManager();
+
+        $fileManager->saveIndexFile('section/test.html', 'test');
+
+        $content = $fileManager->getFileContent('section/test.html');
+
+        $this->assertIsString($content);
+    }
+
+    public function test_try_to_get_invalid_file_content() : void
+    {
+        $fileManager = $this->newFileManager();
+
+        $this->expectException(FileManagerException::class);
+
+        $fileManager->getFileContent('section/test.html');
+    }
+
+    public function test_get_files_from_repo_directory() : void
+    {
+        $fileManager = $this->newFileManager();
+
+        $files = $fileManager->getRepositoryFiles();
 
         $this->assertIsArray($files);
         $this->assertCount(2, $files);
@@ -29,31 +66,54 @@ class FileManagerTest extends TestCase
         ], array_values($files));
     }
 
-    public function test_it_can_save_index_section()
+    public function test_get_files_from_no_exist_directory() : void
     {
-        $fileManager = new FileManager(Version::V10, $this->getSettings());
-
-        $fileManager->saveSectionArticle(
-            'validation',
-            'test.html',
-            'content'
+        $fileManager = new FileManager(
+            Version::V10,
+            'wrong/path',
+            'wrong/path'
         );
 
-        $this->assertFileExists(ROOT_TEST . '/data/index/10.x/validation/test.html');
-        $this->assertFalse(is_dir(ROOT_TEST . '/data/index/10.x/validation/test.html'));
-
-        // remove dir
-        rmdir(ROOT_TEST . '/data/index/10.x/');
+        $this->expectException(FileManagerException::class);
+        $this->expectExceptionMessage('Repository folder wrong/path/10.x not found');
+        $fileManager->getRepositoryFiles();
     }
 
-
-    private function getSettings(): Settings
+    public function test_it_can_save_file()
     {
-        return new Settings([
-            'repository' => 'https://local',
-            'doc_path' => ROOT_TEST . '/data/.docs',
-            'index_path' => ROOT_TEST . '/data/index',
-        ]);
+        $fileManager = $this->newFileManager();
+
+        $fileManager->saveIndexFile('section/test.html', 'test');
+
+        $this->assertFileExists(ROOT_TEST . '/data/index/10.x/section/test.html');
+        $this->assertEquals('test', file_get_contents(ROOT_TEST . '/data/index/10.x/section/test.html'));
     }
+
+    public function test_it_can_remove_index_directory()
+    {
+        $fileManager = $this->newFileManager();
+
+        $fileManager->removeIndexDirectory();
+        $this->assertDirectoryDoesNotExist(ROOT_TEST . '/data/index/10.x');
+    }
+
+    public function test_it_try_two_remove_twice_index_directory()
+    {
+        $fileManager = $this->newFileManager();
+
+        $fileManager->removeIndexDirectory();
+        $fileManager->removeIndexDirectory();
+        $this->assertDirectoryDoesNotExist(ROOT_TEST . '/data/index/10.x');
+    }
+
+    private function newFileManager(): FileManager
+    {
+        return new FileManager(
+            Version::V10,
+            ROOT_TEST . '/data/.docs',
+            ROOT_TEST . '/data/index'
+        );
+    }
+
 
 }

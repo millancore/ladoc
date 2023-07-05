@@ -6,7 +6,12 @@ class Render
 {
     public static function mainIndexList(IndexList $indexList): string
     {
-        $html = '<ul>';
+        $html = '';
+        if($indexList->getName()) {
+            $html .= sprintf('<p class="title">%s</p>', $indexList->getName());
+        }
+
+        $html .= '<ul>';
         foreach ($indexList->all() as $index => $item) {
             $html .= '<li>';
             $html .= sprintf('[%d] %s (%s)', $index, $item->title, $item->anchor);
@@ -20,7 +25,12 @@ class Render
 
     public static function sectionIndexList(IndexList $indexList): string
     {
-        $html = '<ul>';
+        $html = '';
+        if($indexList->getName()) {
+            $html .= sprintf('<p class="title">%s</p>', $indexList->getName());
+        }
+
+        $html .= '<ul>';
         foreach ($indexList->all() as $index => $item) {
             $html .= '<li>';
 

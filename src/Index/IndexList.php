@@ -2,15 +2,39 @@
 
 namespace Lo\Index;
 
-class IndexList
+use Countable;
+
+class IndexList implements Countable
 {
     private array $items = [];
+
+    public function __construct(
+        private ?string $name = null
+    ) {
+        //
+    }
 
     public function attach(ItemList $itemList): self
     {
         $this->items[] = $itemList;
-
         return $this;
+    }
+
+    public function add(int $index, ItemList $itemList): self
+    {
+        $this->items[$index] = $itemList;
+        return $this;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
     }
 
     public function count(): int
@@ -36,6 +60,21 @@ class IndexList
     public function toArray(): array
     {
         return array_map(fn ($item) => $item->toArray(), $this->items);
+    }
+
+    public function filterByLetter(string $letter): self
+    {
+        $indexList = new IndexList(
+            sprintf('%s | filter: %s', $this->name, strtoupper($letter))
+        );
+
+        foreach ($this->items as $index => $item) {
+            if (strtolower($item->title[0]) == $letter) {
+                $indexList->add($index, $item);
+            }
+        }
+
+        return $indexList;
     }
 
 

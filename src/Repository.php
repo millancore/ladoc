@@ -2,22 +2,37 @@
 
 namespace Lo;
 
-use Lo\Enum\Version;
 use Symfony\Component\Process\Process;
 
 class Repository
 {
-    public const REPO_URL = 'https://github.com/laravel/docs.git';
+    private const REPO_URL = 'https://github.com/laravel/docs.git';
+
     public function __construct(
-        private readonly  Version $version,
         private readonly FileManager $fileManager
     ) {
         //
     }
 
-    public function check(): bool
+    public function check(): void
     {
-        return true;
+        $exist = is_dir($this->getDir());
+
+        if (!$exist) {
+            $this->createVersionDirectory();
+            $this->download();
+        }
+    }
+
+    private function getDir(): string
+    {
+        return $this->fileManager->getDocPath();
+    }
+
+
+    private function createVersionDirectory(): void
+    {
+        $this->fileManager->createDirectory($this->getDir());
     }
 
     public function download(): bool
@@ -26,13 +41,12 @@ class Repository
             'git',
             'clone',
             '--branch',
-            $this->version->value,
+            $this->fileManager->getVersion()->value,
             self::REPO_URL,
-            $this->fileManager->docsPath
+            $this->fileManager->getDocPath(),
         ];
 
         $process = new Process($command);
-
         $process->run();
 
         if (!$process->isSuccessful()) {

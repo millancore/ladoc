@@ -2,56 +2,81 @@
 
 namespace Lo;
 
-class FileManager
+use FilesystemIterator;
+use Lo\Enum\Version;
+use Lo\Exception\FileManagerException;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
+
+readonly class FileManager
 {
     public function __construct(
-        public readonly string $docsPath,
-        public readonly string $indexPath
+        private Version $version,
+        private string  $docsPath,
+        private string  $indexPath
     ) {
         //
     }
 
-    public function folderExist(string $path): bool
+    public function getDocPath(): string
     {
-        return is_dir($path);
+        return $this->docsPath . '/' . $this->version->value;
     }
 
-    public function fileExist(string $path): bool
+    public function getIndexPath(): string
     {
-        return is_file($path);
+        return $this->indexPath . '/' . $this->version->value;
+    }
+
+    public function getVersion(): Version
+    {
+        return $this->version;
     }
 
     /**
-     * @param string $path
      * @param array $exclude
-     * @return array [string]
+     * @return string[]
+     * @throws FileManagerException
      */
-    public function getFolderFiles(string $path, array $exclude = []): array
+    public function getRepositoryFiles(array $exclude = []): array
+    {
+        $path = $this->getDocPath();
+
+        if (!is_dir($path)) {
+            throw new FileManagerException(sprintf('Repository folder %s not found', $path));
+        }
+
+        return $this->getFolderFiles($path, $exclude);
+    }
+
+
+    /**
+     * @param string $path
+     * @param array<string> $exclude
+     * @return array<string>
+     */
+    private function getFolderFiles(string $path, array $exclude = []): array
     {
         $excludeFiles = ['.', '..'];
 
-        if (!$this->folderExist($path)) {
-            return [];
-        }
-
         $exclude = array_merge($exclude, $excludeFiles);
-
         $files = array_filter(scandir($path), fn ($file) => !in_array($file, $exclude));
 
         return array_map(fn ($file) => $path . '/' . $file, $files);
     }
 
     /**
-     * @throws \Exception
+     * @param string $filename
+     * @param string $content
+     * @return void
+     * @throws FileManagerException
      */
-    public function save(string $filename, string $content): void
+    private function save(string $filename, string $content): void
     {
-        $successCreateDir = $this->createDirectory(
-            str_replace('/' . basename($filename), '', $filename)
-        );
+        $successCreateDir = $this->createDirectory(dirname($filename));
 
         if (!$successCreateDir) {
-            throw new \Exception('Error creating directory');
+            throw new FileManagerException('Error to create directory');
 
         }
 
@@ -59,13 +84,80 @@ class FileManager
     }
 
 
-    public function getFileContent(string $filePath): string
+    /**
+     * @return void
+     */
+    public function removeIndexDirectory(): void
     {
-        return file_get_contents($filePath);
+        if (!is_dir($this->getIndexPath())) {
+            return;
+        }
+
+        $this->removeDirectory($this->getIndexPath());
+    }
+
+    /**
+     * @param string $filename
+     * @return string
+     * @throws FileManagerException
+     */
+    public function getFileContent(string $filename): string
+    {
+        $path = $this->getIndexPath() . '/' . $filename;
+
+        if (!file_exists($path)) {
+            throw new FileManagerException(sprintf('File %s not found', $path));
+        }
+
+        return file_get_contents($path);
     }
 
 
-    private function createDirectory(string $path): bool
+    /**
+     * @param string $filename
+     * @param string $content
+     * @return void
+     * @throws FileManagerException
+     */
+    public function saveIndexFile(string $filename, string $content): void
+    {
+        $path = $this->getIndexPath() . '/' . $filename;
+        $this->save($path, $content);
+    }
+
+
+    /**
+     * @param string $path
+     * @return void
+     */
+    private function removeDirectory(string $path): void
+    {
+        $directoryIterator = new RecursiveDirectoryIterator(
+            $path,
+            FilesystemIterator::SKIP_DOTS
+        );
+
+        $iterator = new RecursiveIteratorIterator(
+            $directoryIterator,
+            RecursiveIteratorIterator::CHILD_FIRST
+        );
+
+        foreach ($iterator as $file) {
+            if ($file->isDir()) {
+                rmdir($file->getPathname());
+            } else {
+                unlink($file->getPathname());
+            }
+        }
+
+        rmdir($path);
+    }
+
+    /**
+     * @param string $path
+     * @return bool
+     */
+    public function createDirectory(string $path): bool
     {
         if (!is_dir($path)) {
             return mkdir($path, 0777, true);

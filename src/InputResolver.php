@@ -2,43 +2,31 @@
 
 namespace Lo;
 
-/*
-  *  $ list
-  *  $ list -l=a (--letter )
-  *  $ list ...index numbers
-  *  $ <section>
-  *  $ <section> ...index
-  *  $ <section> ...query
-  */
-
-use Exception;
 use Lo\Action\ActionInterface;
+use Lo\Exception\FileManagerException;
 use Lo\Index\IndexManager;
 
 class InputResolver
 {
     public function __construct(
         private readonly IndexManager $indexManager
-    ) {
+    )
+    {
         //
     }
 
-
     /**
-     * @throws Exception
+     * @param string $section
+     * @param array $query
+     * @return ActionInterface
+     * @throws FileManagerException
      */
-    public function resolve(string $section, array $query, array $options = []): string
+    public function resolve(string $section, array $query = []): ActionInterface
     {
         if (is_numeric($section)) {
             $section = $this->indexManager->getMainIndex()->get($section)->anchor;
         }
 
-        $action = $this->actions($section, $query);
-        return $action->execute($query, $options);
-    }
-
-    private function actions(string $section, array $query): ActionInterface
-    {
         if ($section === 'list') {
             return new Action\ListAction($this->indexManager);
         }
@@ -61,7 +49,7 @@ class InputResolver
             return false;
         }
 
-        return !in_array(false, array_map(fn ($item) => is_numeric($item), $query));
+        return !in_array(false, array_map(fn($item) => is_numeric($item), $query));
     }
 
 

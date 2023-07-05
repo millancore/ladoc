@@ -67,7 +67,7 @@ readonly class Splitter
         return array_filter($articles);
     }
 
-    public function getTitle(): ?ItemList
+    public function getTitle(): ?string
     {
         $firstTitle = $this->domDocument->getElementsByTagName('h1')[0];
 
@@ -75,7 +75,7 @@ readonly class Splitter
             return null;
         }
 
-        return new ItemList($firstTitle->nodeValue, $this->section);
+        return $firstTitle->nodeValue;
     }
 
 
@@ -84,7 +84,13 @@ readonly class Splitter
         // Get first list element
         $list = $this->domDocument->getElementsByTagName('ul')[0];
 
-        return $this->parseList($list);
+        $sectionList = $this->parseList($list);
+
+        if ($this->getTitle()) {
+            $sectionList->setName($this->getTitle());
+        }
+
+        return $sectionList;
     }
 
     public function parseList($list): IndexList

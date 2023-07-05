@@ -24,7 +24,8 @@
         "phpstan/phpstan": "^1.10"
     },
     "scripts": {
-        "test": "phpunit",
+        "test": "phpun",
+        "coverage": "phpunit --coverage-html coverage",
         "cs": "php-cs-fixer fix src --rules=@PSR12 --dry-run --diff",
         "cs-fix": "php-cs-fixer fix src --rules=@PSR12",
         "phpstan": "phpstan analyse --level=8 src tests",

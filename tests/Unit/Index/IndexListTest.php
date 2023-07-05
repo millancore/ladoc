@@ -6,6 +6,10 @@ use Lo\Index\IndexList;
 use Lo\Index\ItemList;
 use Lo\Tests\Unit\TestCase;
 
+/**
+ * @covers \Lo\Index\IndexList
+ * @covers \Lo\Index\ItemList
+ */
 class IndexListTest extends TestCase
 {
     public function test_it_can_attach_item_list(): void
@@ -14,6 +18,51 @@ class IndexListTest extends TestCase
         $indexList->attach(new ItemList('title', 'anchor', new IndexList()));
 
         $this->assertEquals(1, $indexList->count());
+    }
+
+    public function test_it_can_set_name()
+    {
+        $indexList = new IndexList();
+        $indexList->setName('name');
+
+        $this->assertSame('name', $indexList->getName());
+    }
+
+    public function test_it_can_get_by_index()
+    {
+        $indexList = new IndexList();
+        $indexList->attach(new ItemList('first title', 'first anchor'));
+        $indexList->attach(new ItemList('second title', 'second anchor'));
+
+        $this->assertSame('first title', $indexList->get(0)->title);
+    }
+
+    public function test_it_can_get_all_items()
+    {
+        $indexList = new IndexList();
+        $indexList->attach(new ItemList('title', 'anchor'));
+        $indexList->attach(new ItemList('title', 'anchor'));
+        $indexList->attach(new ItemList('title', 'anchor'));
+
+        $this->assertCount(3, $indexList->all());
+    }
+
+    public function test_it_can_validate_if_empty()
+    {
+        $indexList = new IndexList();
+        $this->assertTrue($indexList->isEmpty());
+    }
+
+    public function test_it_can_filter_by_first_letter()
+    {
+        $indexList = new IndexList();
+        $indexList->attach(new ItemList('title', 'anchor', new IndexList()));
+        $indexList->attach(new ItemList('title', 'anchor', new IndexList()));
+        $indexList->attach(new ItemList('title', 'anchor', new IndexList()));
+
+        $this->assertCount(3, $indexList->all());
+        $this->assertCount(3, $indexList->filterByLetter('t'));
+        $this->assertCount(0, $indexList->filterByLetter('a'));
     }
 
     public function test_it_can_get_nested_item_as_array() : void

@@ -16,7 +16,7 @@ readonly class SectionQueryAction implements ActionInterface
 
     public function execute(array $query, array $options = []): string
     {
-        if(!$this->indexManager->sectionIndexFileExist($this->section)){
+        if(!$this->indexManager->sectionIndexFileExist($this->section)) {
             return '';
         }
 

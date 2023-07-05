@@ -6,6 +6,10 @@ use Lo\Index\IndexList;
 use Lo\Index\ItemList;
 use Lo\Tests\Unit\TestCase;
 
+/**
+ * @covers \Lo\Index\ItemList
+ * @covers \Lo\Index\IndexList
+ */
 class ItemListTest extends TestCase
 {
     public function test_it_can_create_item_and_access_properties(): void
