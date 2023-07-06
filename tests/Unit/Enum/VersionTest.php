@@ -1,12 +1,12 @@
 <?php
 
-namespace Lo\Tests\Unit\Enum;
+namespace Ladoc\Tests\Unit\Enum;
 
-use Lo\Enum\Version;
-use Lo\Tests\Unit\TestCase;
+use Ladoc\Enum\Version;
+use Ladoc\Tests\Unit\TestCase;
 
 /**
- * @covers \Lo\Enum\Version
+ * @covers \Ladoc\Enum\Version
  */
 class VersionTest extends TestCase
 {

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Lo;
+namespace Ladoc;
 
-use Lo\Action\ActionInterface;
-use Lo\Exception\FileManagerException;
-use Lo\Index\IndexManager;
+use Ladoc\Action\ActionInterface;
+use Ladoc\Exception\FileManagerException;
+use Ladoc\Index\IndexManager;
 
 class InputResolver
 {

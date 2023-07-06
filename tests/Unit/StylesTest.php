@@ -1,11 +1,11 @@
 <?php
 
-namespace Lo\Tests\Unit;
+namespace Ladoc\Tests\Unit;
 
-use Lo\Styles;
+use Ladoc\Styles;
 
 /**
- * @covers \Lo\Styles
+ * @covers \Ladoc\Styles
  */
 class StylesTest extends TestCase
 {

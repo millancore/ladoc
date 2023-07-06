@@ -1,25 +1,25 @@
 <?php
 
-namespace Lo\Tests\Feature;
+namespace Ladoc\Tests\Feature;
 
-use Lo\Enum\Version;
-use Lo\FileManager;
-use Lo\Tests\Unit\TestCase;
-use Lo\Command\MainCommand;
+use Ladoc\Enum\Version;
+use Ladoc\FileManager;
+use Ladoc\Tests\Unit\TestCase;
+use Ladoc\Command\MainCommand;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 
 /**
- * @covers \Lo\Command\MainCommand
+ * @covers \Ladoc\Command\MainCommand
  *
- * @uses \Lo\Enum\Version
- * @uses \Lo\FileManager
- * @uses \Lo\Index\IndexManager
- * @uses \Lo\InputResolver
- * @uses \Lo\Repository
- * @uses \Lo\Formatter\TermwindFormatter
- * @uses \Lo\Splitter
- * @uses \Lo\Section
+ * @uses \Ladoc\Enum\Version
+ * @uses \Ladoc\FileManager
+ * @uses \Ladoc\Index\IndexManager
+ * @uses \Ladoc\InputResolver
+ * @uses \Ladoc\Repository
+ * @uses \Ladoc\Formatter\TermwindFormatter
+ * @uses \Ladoc\Splitter
+ * @uses \Ladoc\Section
  */
 class MainCommandTest extends TestCase
 {
@@ -34,10 +34,10 @@ class MainCommandTest extends TestCase
     }
 
     /**
-     * @uses \Lo\Action\ListAction
-     * @uses \Lo\Index\IndexList
-     * @uses \Lo\Index\ItemList
-     * @uses \Lo\Index\Render
+     * @uses \Ladoc\Action\ListAction
+     * @uses \Ladoc\Index\IndexList
+     * @uses \Ladoc\Index\ItemList
+     * @uses \Ladoc\Index\Render
      */
     public function test_it_can_display_main_list(): void
     {
@@ -58,9 +58,9 @@ class MainCommandTest extends TestCase
     }
 
     /**
-     * @uses \Lo\Action\SectionQueryAction
-     * @uses \Lo\Index\IndexList
-     * @uses \Lo\Index\ItemList
+     * @uses \Ladoc\Action\SectionQueryAction
+     * @uses \Ladoc\Index\IndexList
+     * @uses \Ladoc\Index\ItemList
      */
     public function test_it_can_display_search_article(): void
     {

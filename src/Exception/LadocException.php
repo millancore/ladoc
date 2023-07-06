@@ -1,6 +1,6 @@
 <?php
 
-namespace Lo\Exception;
+namespace Ladoc\Exception;
 
 use Exception;
 

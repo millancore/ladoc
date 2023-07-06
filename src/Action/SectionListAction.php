@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Lo\Action;
+namespace Ladoc\Action;
 
-use Lo\Index\IndexManager;
-use Lo\Index\Render;
+use Ladoc\Index\IndexManager;
+use Ladoc\Index\Render;
 
 readonly class SectionListAction implements ActionInterface
 {

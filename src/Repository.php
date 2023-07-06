@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Lo;
+namespace Ladoc;
 
 use Symfony\Component\Process\Process;
 

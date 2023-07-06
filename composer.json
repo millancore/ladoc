@@ -1,12 +1,22 @@
 {
+    "name": "millancore/ladoc",
+    "description": "Console tool for explore Laravel Documentation",
+    "keywords": ["laravel", "php", "documentation", "console", "cli", "tool"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Juan Millan",
+            "email": "juanes14569@gmail.com"
+        }
+    ],
     "autoload": {
         "psr-4": {
-            "Lo\\" : "src/"
+            "Ladoc\\" : "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Lo\\Tests\\" : "tests/"
+            "Ladoc\\Tests\\" : "tests/"
         }
     },
     "require": {

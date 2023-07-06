@@ -1,13 +1,13 @@
 <?php
 
-namespace Lo\Tests\Unit;
+namespace Ladoc\Tests\Unit;
 
-use Lo\Index\IndexList;
-use Lo\Section;
+use Ladoc\Index\IndexList;
+use Ladoc\Section;
 
 /**
- * @covers \Lo\Section
- * @uses  \Lo\Index\IndexList
+ * @covers \Ladoc\Section
+ * @uses  \Ladoc\Index\IndexList
  */
 class SectionTest extends TestCase
 {

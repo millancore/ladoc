@@ -1,25 +1,25 @@
 <?php
 
-namespace Lo\Tests\Unit\Action;
+namespace Ladoc\Tests\Unit\Action;
 
-use Lo\Index\IndexList;
-use Lo\Index\IndexManager;
-use Lo\Index\ItemList;
-use Lo\Tests\Unit\TestCase;
+use Ladoc\Index\IndexList;
+use Ladoc\Index\IndexManager;
+use Ladoc\Index\ItemList;
+use Ladoc\Tests\Unit\TestCase;
 
-use Lo\Action\ListAction;
+use Ladoc\Action\ListAction;
 
 /**
- * @covers \Lo\Action\ListAction
+ * @covers \Ladoc\Action\ListAction
  *
- * @uses \Lo\Index\IndexList
- * @uses \Lo\Index\ItemList
- * @uses \Lo\Index\Render
+ * @uses \Ladoc\Index\IndexList
+ * @uses \Ladoc\Index\ItemList
+ * @uses \Ladoc\Index\Render
  *
  */
 class ListActionTest extends TestCase
 {
-    public function test_it_can_return_main_list_as_html() : void
+    public function test_it_can_return_main_list_as_html(): void
     {
         $indexManager = $this->createMock(IndexManager::class);
 
@@ -39,7 +39,7 @@ class ListActionTest extends TestCase
     }
 
 
-    public function test_it_can_return_main_list_filtered() : void
+    public function test_it_can_return_main_list_filtered(): void
     {
         $indexManager = $this->createMock(IndexManager::class);
 

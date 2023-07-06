@@ -1,6 +1,6 @@
 <?php
 
-namespace Lo\Action;
+namespace Ladoc\Action;
 
 interface ActionInterface
 {

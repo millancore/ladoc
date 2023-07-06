@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Lo\Command;
+namespace Ladoc\Command;
 
 use League\CommonMark\Exception\CommonMarkException;
-use Lo\Enum\Version;
-use Lo\FileManager;
-use Lo\Index\IndexManager;
-use Lo\InputResolver;
-use Lo\Repository;
-use Lo\Styles;
-use Lo\Termwind;
+use Ladoc\Enum\Version;
+use Ladoc\FileManager;
+use Ladoc\Index\IndexManager;
+use Ladoc\InputResolver;
+use Ladoc\Repository;
+use Ladoc\Styles;
+use Ladoc\Termwind;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -75,6 +75,12 @@ class MainCommand extends Command
 
 
         $version = Version::fromValue($versionInput);
+
+        if ($version !== Version::getLatestVersion()) {
+            $output->writeln(
+                sprintf('<comment>Using old version: %s</comment>', $version->value)
+            );
+        }
 
         $fileManager = new FileManager(
             $version,

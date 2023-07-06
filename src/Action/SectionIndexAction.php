@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Lo\Action;
+namespace Ladoc\Action;
 
-use Lo\Index\IndexList;
-use Lo\Index\IndexManager;
-use Lo\Index\Render;
+use Ladoc\Index\IndexList;
+use Ladoc\Index\IndexManager;
+use Ladoc\Index\Render;
 
 class SectionIndexAction implements ActionInterface
 {

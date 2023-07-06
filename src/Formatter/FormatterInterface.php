@@ -1,6 +1,6 @@
 <?php
 
-namespace Lo\Formatter;
+namespace Ladoc\Formatter;
 
 interface FormatterInterface
 {

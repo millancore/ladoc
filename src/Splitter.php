@@ -1,13 +1,13 @@
 <?php
 
-namespace Lo;
+namespace Ladoc;
 
 use DOMDocument;
 use DOMElement;
 use DOMXPath;
-use Lo\Formatter\FormatterInterface;
-use Lo\Index\IndexList;
-use Lo\Index\ItemList;
+use Ladoc\Formatter\FormatterInterface;
+use Ladoc\Index\IndexList;
+use Ladoc\Index\ItemList;
 
 readonly class Splitter
 {

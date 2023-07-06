@@ -1,13 +1,13 @@
 <?php
 
-namespace Lo\Tests\Unit;
+namespace Ladoc\Tests\Unit;
 
-use Lo\Enum\Version;
-use Lo\Exception\FileManagerException;
-use Lo\FileManager;
+use Ladoc\Enum\Version;
+use Ladoc\Exception\FileManagerException;
+use Ladoc\FileManager;
 
 /**
- * @covers \Lo\FileManager
+ * @covers \Ladoc\FileManager
  */
 class FileManagerTest extends TestCase
 {

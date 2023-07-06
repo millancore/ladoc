@@ -1,14 +1,14 @@
 <?php
 
-namespace Lo\Tests\Unit\Index;
+namespace Ladoc\Tests\Unit\Index;
 
-use Lo\Index\IndexList;
-use Lo\Index\ItemList;
-use Lo\Tests\Unit\TestCase;
+use Ladoc\Index\IndexList;
+use Ladoc\Index\ItemList;
+use Ladoc\Tests\Unit\TestCase;
 
 /**
- * @covers \Lo\Index\ItemList
- * @uses  \Lo\Index\IndexList
+ * @covers \Ladoc\Index\ItemList
+ * @uses  \Ladoc\Index\IndexList
  */
 class ItemListTest extends TestCase
 {

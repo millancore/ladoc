@@ -1,18 +1,18 @@
 <?php
 
-namespace Lo\Tests\Unit;
+namespace Ladoc\Tests\Unit;
 
-use Lo\Formatter\TermwindFormatter;
-use Lo\Index\IndexList;
-use Lo\Splitter;
+use Ladoc\Formatter\TermwindFormatter;
+use Ladoc\Index\IndexList;
+use Ladoc\Splitter;
 
 /**
- * @covers \Lo\Splitter
+ * @covers \Ladoc\Splitter
  */
 class SplitterTest extends TestCase
 {
     /**
-     * @uses \Lo\Formatter\TermwindFormatter
+     * @uses \Ladoc\Formatter\TermwindFormatter
      */
     public function test_it_can_split_section_articles(): void
     {
@@ -71,8 +71,8 @@ HTML;
 
 
     /**
-     * @uses  \Lo\Index\IndexList
-     * @uses  \Lo\Index\ItemList
+     * @uses  \Ladoc\Index\IndexList
+     * @uses  \Ladoc\Index\ItemList
      */
     public function test_it_parse_html_list_to_index_list(): void
     {

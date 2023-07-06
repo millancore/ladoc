@@ -1,20 +1,20 @@
 <?php
 
-namespace Lo\Tests\Unit;
+namespace Ladoc\Tests\Unit;
 
-use Lo\Action;
-use Lo\Index\IndexList;
-use Lo\Index\IndexManager;
-use Lo\Index\ItemList;
-use Lo\InputResolver;
+use Ladoc\Action;
+use Ladoc\Index\IndexList;
+use Ladoc\Index\IndexManager;
+use Ladoc\Index\ItemList;
+use Ladoc\InputResolver;
 
 /**
- * @covers \Lo\InputResolver
+ * @covers \Ladoc\InputResolver
  */
 class InputResolverTest extends TestCase
 {
     /**
-     * @uses \Lo\Action\ListAction
+     * @uses \Ladoc\Action\ListAction
      */
     public function test_it_can_get_main_list_action(): void
     {
@@ -29,7 +29,7 @@ class InputResolverTest extends TestCase
 
 
     /**
-     * @uses \Lo\Action\ListAction
+     * @uses \Ladoc\Action\ListAction
      */
     public function test_it_can_get_main_list_letter_filter(): void
     {
@@ -43,9 +43,9 @@ class InputResolverTest extends TestCase
     }
 
     /**
-     * @uses \Lo\Action\SectionListAction
-     * @uses  \Lo\Index\IndexList
-     * @uses  \Lo\Index\ItemList
+     * @uses \Ladoc\Action\SectionListAction
+     * @uses  \Ladoc\Index\IndexList
+     * @uses  \Ladoc\Index\ItemList
      */
     public function test_it_can_get_section_by_index(): void
     {
@@ -66,7 +66,7 @@ class InputResolverTest extends TestCase
     }
 
     /**
-     * @uses \Lo\Action\SectionListAction
+     * @uses \Ladoc\Action\SectionListAction
      */
     public function test_it_can_get_section_by_name(): void
     {
@@ -80,7 +80,7 @@ class InputResolverTest extends TestCase
     }
 
     /**
-     * @uses \Lo\Action\SectionQueryAction
+     * @uses \Ladoc\Action\SectionQueryAction
      */
     public function test_it_can_search_section(): void
     {

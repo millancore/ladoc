@@ -1,11 +1,11 @@
 <?php
 
-namespace Lo\Tests\Unit;
+namespace Ladoc\Tests\Unit;
 
-use Lo\Formatter\TermwindFormatter;
+use Ladoc\Formatter\TermwindFormatter;
 
 /**
- * @covers \Lo\Formatter\TermwindFormatter
+ * @covers \Ladoc\Formatter\TermwindFormatter
  */
 class TermwindFormatterTest extends TestCase
 {

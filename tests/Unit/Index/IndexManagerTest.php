@@ -1,22 +1,22 @@
 <?php
 
-namespace Lo\Tests\Unit\Index;
+namespace Ladoc\Tests\Unit\Index;
 
-use Lo\Enum\Version;
-use Lo\FileManager;
-use Lo\Index\IndexList;
-use Lo\Index\IndexManager;
-use Lo\Tests\Unit\TestCase;
+use Ladoc\Enum\Version;
+use Ladoc\FileManager;
+use Ladoc\Index\IndexList;
+use Ladoc\Index\IndexManager;
+use Ladoc\Tests\Unit\TestCase;
 
 /**
- * @covers \Lo\Index\IndexManager
+ * @covers \Ladoc\Index\IndexManager
  *
- * @uses \Lo\FileManager
- * @uses \Lo\Formatter\TermwindFormatter
- * @uses \Lo\Index\IndexList
- * @uses \Lo\Index\ItemList
- * @uses \Lo\Section
- * @uses \Lo\Splitter
+ * @uses \Ladoc\FileManager
+ * @uses \Ladoc\Formatter\TermwindFormatter
+ * @uses \Ladoc\Index\IndexList
+ * @uses \Ladoc\Index\ItemList
+ * @uses \Ladoc\Section
+ * @uses \Ladoc\Splitter
  *
  */
 class IndexManagerTest extends TestCase

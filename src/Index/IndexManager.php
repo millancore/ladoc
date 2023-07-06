@@ -1,15 +1,15 @@
 <?php
 
-namespace Lo\Index;
+namespace Ladoc\Index;
 
 use Exception;
 use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Exception\CommonMarkException;
-use Lo\Exception\FileManagerException;
-use Lo\FileManager;
-use Lo\Formatter\TermwindFormatter;
-use Lo\Section;
-use Lo\Splitter;
+use Ladoc\Exception\FileManagerException;
+use Ladoc\FileManager;
+use Ladoc\Formatter\TermwindFormatter;
+use Ladoc\Section;
+use Ladoc\Splitter;
 
 class IndexManager
 {

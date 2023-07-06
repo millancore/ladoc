@@ -1,25 +1,23 @@
 <?php
 
-namespace Lo\Tests\Unit\Action;
+namespace Ladoc\Tests\Unit\Action;
 
-use Lo\Action\SectionListAction;
-use Lo\Index\IndexList;
-use Lo\Index\IndexManager;
-use Lo\Index\ItemList;
-use Lo\Tests\Unit\TestCase;
-
+use Ladoc\Action\SectionListAction;
+use Ladoc\Index\IndexList;
+use Ladoc\Index\IndexManager;
+use Ladoc\Index\ItemList;
+use Ladoc\Tests\Unit\TestCase;
 
 /**
- * @covers \Lo\Action\SectionListAction
+ * @covers \Ladoc\Action\SectionListAction
  *
- * @uses \Lo\Index\IndexList
- * @uses \Lo\Index\ItemList
- * @uses \Lo\Index\Render
+ * @uses \Ladoc\Index\IndexList
+ * @uses \Ladoc\Index\ItemList
+ * @uses \Ladoc\Index\Render
  */
 class SectionListActionTest extends TestCase
 {
-
-    public function test_it_can_return_section_list_as_html() : void
+    public function test_it_can_return_section_list_as_html(): void
     {
         $indexManager = $this->createMock(IndexManager::class);
 
@@ -30,7 +28,8 @@ class SectionListActionTest extends TestCase
                 'Commands',
                 'artisan-commands',
                 (new IndexList())->attach(new ItemList('Make Command', 'artisan-make-command'))
-            ));
+            )
+        );
 
         $indexManager->method('getSectionIndex')
             ->willReturn($sectionList);

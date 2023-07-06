@@ -1,6 +1,6 @@
 <?php
 
-namespace Lo\Tests\Unit;
+namespace Ladoc\Tests\Unit;
 
 class TestCase extends \PHPUnit\Framework\TestCase
 {

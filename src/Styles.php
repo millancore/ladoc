@@ -1,6 +1,6 @@
 <?php
 
-namespace Lo;
+namespace Ladoc;
 
 readonly class Styles
 {

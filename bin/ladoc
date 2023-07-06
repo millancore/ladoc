@@ -5,7 +5,7 @@ $rootPath = dirname(__DIR__);
 
 require $rootPath . '/bootstrap.php';
 
-use Lo\Command\MainCommand;
+use Ladoc\Command\MainCommand;
 use Symfony\Component\Console\Application;
 
 $application = new Application();

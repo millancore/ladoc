@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Lo;
+namespace Ladoc;
 
 use FilesystemIterator;
-use Lo\Enum\Version;
-use Lo\Exception\FileManagerException;
+use Ladoc\Enum\Version;
+use Ladoc\Exception\FileManagerException;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 

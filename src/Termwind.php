@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Lo;
+namespace Ladoc;
 
 use function Termwind\render;
 use function Termwind\style;

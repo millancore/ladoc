@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Lo;
+namespace Ladoc;
 
-use Lo\Index\IndexList;
+use Ladoc\Index\IndexList;
 
 readonly class Section
 {

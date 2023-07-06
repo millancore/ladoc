@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Lo\Enum;
+namespace Ladoc\Enum;
 
 use InvalidArgumentException;
 

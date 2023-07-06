@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Lo\Index;
+namespace Ladoc\Index;
 
 readonly class ItemList
 {

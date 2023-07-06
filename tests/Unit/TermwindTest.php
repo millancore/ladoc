@@ -1,13 +1,13 @@
 <?php
 
-namespace Lo\Tests\Unit;
+namespace Ladoc\Tests\Unit;
 
-use Lo\Styles;
-use Lo\Termwind;
+use Ladoc\Styles;
+use Ladoc\Termwind;
 
 /**
- * @covers \Lo\Termwind
- * @uses  \Lo\Styles
+ * @covers \Ladoc\Termwind
+ * @uses  \Ladoc\Styles
  */
 class TermwindTest extends TestCase
 {

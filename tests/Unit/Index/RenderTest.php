@@ -1,16 +1,16 @@
 <?php
 
-namespace Lo\Tests\Unit\Index;
+namespace Ladoc\Tests\Unit\Index;
 
-use Lo\Index\IndexList;
-use Lo\Index\ItemList;
-use Lo\Index\Render;
-use Lo\Tests\Unit\TestCase;
+use Ladoc\Index\IndexList;
+use Ladoc\Index\ItemList;
+use Ladoc\Index\Render;
+use Ladoc\Tests\Unit\TestCase;
 
 /**
- * @covers \Lo\Index\Render
- * @uses  \Lo\Index\IndexList
- * @uses  \Lo\Index\ItemList
+ * @covers \Ladoc\Index\Render
+ * @uses  \Ladoc\Index\IndexList
+ * @uses  \Ladoc\Index\ItemList
  */
 class RenderTest extends TestCase
 {

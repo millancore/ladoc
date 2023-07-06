@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Lo\Action;
+namespace Ladoc\Action;
 
-use Lo\Index\IndexManager;
+use Ladoc\Index\IndexManager;
 use Symfony\Component\Process\Process;
 
 readonly class SectionQueryAction implements ActionInterface

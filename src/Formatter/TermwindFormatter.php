@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Lo\Formatter;
+namespace Ladoc\Formatter;
 
 readonly class TermwindFormatter implements FormatterInterface
 {
