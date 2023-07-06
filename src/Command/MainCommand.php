@@ -24,9 +24,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 class MainCommand extends Command
 {
     public function __construct(
-        private readonly string $rootPath
-    )
-    {
+        private readonly string $rootPath,
+        private readonly bool   $isTestMode = false
+    ) {
         parent::__construct();
     }
 
@@ -85,7 +85,9 @@ class MainCommand extends Command
         $indexManager = new IndexManager($fileManager);
 
         if (!$indexManager->check()) {
+
             $output->writeln(sprintf('Download v%s and Indexing...', $version->value));
+
             (new Repository($fileManager))->check();
             $indexManager->createIndex();
         }
@@ -99,11 +101,19 @@ class MainCommand extends Command
             ['letter' => $input->getOption('letter')]
         );
 
+        if ($this->isTestMode) {
+            $output->write($content);
+            return Command::SUCCESS;
+        }
+
+        // @codeCoverageIgnoreStart
         (new Termwind(
             new Styles(require $this->rootPath . '/styles.php')
         ))->render($content);
 
         return Command::SUCCESS;
+        // @codeCoverageIgnoreEnd
     }
+
 
 }

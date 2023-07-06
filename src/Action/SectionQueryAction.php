@@ -33,7 +33,6 @@ readonly class SectionQueryAction implements ActionInterface
         ]);
         $process->run();
 
-
         $output = explode("\n", $process->getOutput());
         $output = array_filter($output);
 

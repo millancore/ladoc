@@ -36,12 +36,20 @@ readonly class Splitter
 
         $elements = $xpath->query('//p[a/@name]');
 
+        if (!$elements) {
+            return [];
+        }
+
         $articles = [];
         $currentKey = '';
         $currentSection = '';
+
+        /** @var DOMElement $element */
         foreach ($elements as $element) {
 
-            $name = $element->getElementsByTagName('a')->item(0)->getAttribute('name');
+            /** @var DOMElement $anchorElement */
+            $anchorElement = $element->getElementsByTagName('a')->item(0);
+            $name = $anchorElement->getAttribute('name');
 
             if (!empty($currentSection)) {
                 $articles[$currentKey] = $currentSection;
@@ -105,6 +113,7 @@ readonly class Splitter
             return $result;
         }
 
+        /** @var DOMElement $item */
         foreach ($list->childNodes as $item) {
             if ($item->nodeName === 'li') {
 

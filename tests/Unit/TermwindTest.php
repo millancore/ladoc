@@ -7,7 +7,7 @@ use Lo\Termwind;
 
 /**
  * @covers \Lo\Termwind
- * @covers \Lo\Styles
+ * @uses  \Lo\Styles
  */
 class TermwindTest extends TestCase
 {

@@ -87,6 +87,10 @@ class IndexList implements Countable
     }
 
 
+    /**
+     * @param array<int> $query
+     * @return IndexList|ItemList
+     */
     public function getNestedItems(array $query): IndexList|ItemList
     {
         $count = count($query);

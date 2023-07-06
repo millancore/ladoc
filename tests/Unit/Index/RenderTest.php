@@ -9,8 +9,8 @@ use Lo\Tests\Unit\TestCase;
 
 /**
  * @covers \Lo\Index\Render
- * @covers \Lo\Index\IndexList
- * @covers \Lo\Index\ItemList
+ * @uses  \Lo\Index\IndexList
+ * @uses  \Lo\Index\ItemList
  */
 class RenderTest extends TestCase
 {

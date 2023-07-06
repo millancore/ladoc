@@ -8,10 +8,12 @@ use Lo\Splitter;
 
 /**
  * @covers \Lo\Splitter
- * @covers \Lo\Formatter\TermwindFormatter
  */
 class SplitterTest extends TestCase
 {
+    /**
+     * @uses \Lo\Formatter\TermwindFormatter
+     */
     public function test_it_can_split_section_articles(): void
     {
 
@@ -69,8 +71,8 @@ HTML;
 
 
     /**
-     * @covers \Lo\Index\IndexList
-     * @covers \Lo\Index\ItemList
+     * @uses  \Lo\Index\IndexList
+     * @uses  \Lo\Index\ItemList
      */
     public function test_it_parse_html_list_to_index_list(): void
     {

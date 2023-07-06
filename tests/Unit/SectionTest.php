@@ -7,7 +7,7 @@ use Lo\Section;
 
 /**
  * @covers \Lo\Section
- * @covers \Lo\Index\IndexList
+ * @uses  \Lo\Index\IndexList
  */
 class SectionTest extends TestCase
 {

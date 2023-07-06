@@ -8,7 +8,7 @@ use Lo\Tests\Unit\TestCase;
 
 /**
  * @covers \Lo\Index\ItemList
- * @covers \Lo\Index\IndexList
+ * @uses  \Lo\Index\IndexList
  */
 class ItemListTest extends TestCase
 {
@@ -21,9 +21,19 @@ class ItemListTest extends TestCase
         $this->assertInstanceOf(IndexList::class, $item->children);
     }
 
+    public function test_it_can_validate_if_has_children(): void
+    {
+        $item = new ItemList(
+            'title',
+            'anchor',
+            (new IndexList())->attach(new ItemList('child title', 'anchor'))
+        );
+
+        $this->assertTrue($item->hasChildren());
+    }
+
     public function test_it_can_get_nested_item_as_array(): void
     {
-
         $indexList = new IndexList();
         $indexList->attach(new ItemList('child title', 'anchor', new IndexList()));
 

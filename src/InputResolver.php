@@ -26,7 +26,7 @@ class InputResolver
     {
         if (is_numeric($section)) {
             $section = $this->indexManager->getMainIndex()->get(
-                $section
+                (int) $section
             )->anchor;
         }
 
@@ -46,6 +46,10 @@ class InputResolver
     }
 
 
+    /**
+     * @param array<string|int> $query
+     * @return bool
+     */
     private function queryHasOnlyNumber(array $query): bool
     {
         if (empty($query)) {

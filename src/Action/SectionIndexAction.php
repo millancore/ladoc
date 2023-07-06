@@ -21,7 +21,9 @@ class SectionIndexAction implements ActionInterface
     {
         $section = $this->indexManager->getSectionIndex($this->section);
 
-        $element = $section->getNestedItems($query);
+        $element = $section->getNestedItems(
+            array_map(fn ($item) => (int) $item, $query)
+        );
 
         if ($element instanceof IndexList) {
             return  Render::sectionIndexList($element);

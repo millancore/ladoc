@@ -8,7 +8,7 @@ use Lo\Tests\Unit\TestCase;
 
 /**
  * @covers \Lo\Index\IndexList
- * @covers \Lo\Index\ItemList
+ * @uses  \Lo\Index\ItemList
  */
 class IndexListTest extends TestCase
 {
