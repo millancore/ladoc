@@ -1,6 +1,6 @@
 <?php
 
 return [
-    'title' => 'bg-teal-500 px-1',
+    'title' => 'bg-teal-700 px-1',
     'inline-code' => 'bg-gray-700',
 ];
