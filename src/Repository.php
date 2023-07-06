@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Lo;
 
 use Symfony\Component\Process\Process;

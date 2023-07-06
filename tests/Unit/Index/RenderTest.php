@@ -14,7 +14,7 @@ use Lo\Tests\Unit\TestCase;
  */
 class RenderTest extends TestCase
 {
-    public function test_it_can_render_main_list() : void
+    public function test_it_can_render_main_list(): void
     {
         $indexList = new IndexList('Test List');
 
@@ -28,7 +28,7 @@ class RenderTest extends TestCase
         );
     }
 
-    public function test_it_can_render_section_list() : void
+    public function test_it_can_render_section_list(): void
     {
         $indexList = new IndexList('Test Section List');
 
@@ -39,7 +39,8 @@ class RenderTest extends TestCase
                 'anchor-two',
                 (new IndexList())
                     ->attach(new ItemList('child title', 'anchor'))
-            ));
+            )
+        );
         $indexList->attach(new ItemList('title three', 'anchor-three'));
 
         $this->assertSame(

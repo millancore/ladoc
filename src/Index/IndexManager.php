@@ -104,11 +104,14 @@ class IndexManager
     {
         $markdownContent = file_get_contents($file);
 
+        if($markdownContent === false) {
+            throw new FileManagerException(sprintf('File %s is empty', $file));
+        }
+
         $section = pathinfo($file, PATHINFO_FILENAME);
 
         $html = (new CommonMarkConverter())->convert($markdownContent);
-
-        $splitter = new Splitter($section, $html);
+        $splitter = new Splitter($html);
 
         if ($splitter->getTitle()) {
             $mainIndex->attach(new ItemList($splitter->getTitle(), $section));

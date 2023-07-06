@@ -11,7 +11,7 @@ use Lo\Section;
  */
 class SectionTest extends TestCase
 {
-    public function test_it_can_access_properties()
+    public function test_it_can_access_properties(): void
     {
         $section = new Section('title', new IndexList(), [
             'article-1' => 'content-1',

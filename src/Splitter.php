@@ -14,19 +14,23 @@ readonly class Splitter
     private DOMDocument $domDocument;
 
     public function __construct(
-        private string $section,
         private string $htmlContent,
     ) {
         $this->domDocument = new DOMDocument();
-        @$this->domDocument->loadHTML($htmlContent);
+        $this->domDocument->loadHTML($htmlContent, LIBXML_NOERROR | LIBXML_COMPACT);
     }
 
+
+    /**
+     * @param FormatterInterface $formatter
+     * @return array<string, string>
+     */
     public function splitArticles(FormatterInterface $formatter): array
     {
         $htmlContent = $formatter->format($this->htmlContent);
 
         $domDocument = new DOMDocument();
-        @$domDocument->loadHTML($htmlContent);
+        $domDocument->loadHTML($htmlContent, LIBXML_NOERROR | LIBXML_COMPACT);
 
         $xpath = new DOMXPath($domDocument);
 
@@ -93,7 +97,7 @@ readonly class Splitter
         return $sectionList;
     }
 
-    public function parseList($list): IndexList
+    public function parseList(?DOMElement $list): IndexList
     {
         $result = new IndexList();
 

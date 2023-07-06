@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Lo;
 
 use function Termwind\render;
@@ -13,13 +15,21 @@ readonly class Termwind
     }
 
 
-    public function loadStyles(): void
+    public function loadStyles(): bool
     {
-        style('title')->apply($this->styles->title);
-        style('inline-code')->apply($this->styles->inlineCode);
+        $styles = $this->styles->all();
+
+        foreach ($styles as $name => $style) {
+            style($name)->apply($style);
+        }
+
+        return true;
     }
 
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function render(string $html): void
     {
         $this->loadStyles();

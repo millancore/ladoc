@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Lo\Index;
 
 use Countable;
 
 class IndexList implements Countable
 {
+    /** @var ItemList[] */
     private array $items = [];
 
     public function __construct(
@@ -52,11 +55,17 @@ class IndexList implements Countable
         return $this->items[$index];
     }
 
+    /**
+     * @return ItemList[]
+     */
     public function all(): array
     {
         return $this->items;
     }
 
+    /**
+     * @return array<array<string, mixed>>
+     */
     public function toArray(): array
     {
         return array_map(fn ($item) => $item->toArray(), $this->items);
@@ -82,7 +91,6 @@ class IndexList implements Countable
     {
         $count = count($query);
 
-        /** @var ItemList $firstElement */
         $firstElement = $this->items[$query[0]];
 
         if (!$firstElement->hasChildren()) {

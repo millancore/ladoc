@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Lo;
 
 use FilesystemIterator;
@@ -34,7 +36,7 @@ readonly class FileManager
     }
 
     /**
-     * @param array $exclude
+     * @param array<string> $exclude
      * @return string[]
      * @throws FileManagerException
      */
@@ -58,9 +60,14 @@ readonly class FileManager
     private function getFolderFiles(string $path, array $exclude = []): array
     {
         $excludeFiles = ['.', '..'];
+        $arrayFiles = scandir($path);
+
+        if ($arrayFiles === false) {
+            return [];
+        }
 
         $exclude = array_merge($exclude, $excludeFiles);
-        $files = array_filter(scandir($path), fn ($file) => !in_array($file, $exclude));
+        $files = array_filter($arrayFiles, fn ($file) => !in_array($file, $exclude));
 
         return array_map(fn ($file) => $path . '/' . $file, $files);
     }
@@ -109,7 +116,13 @@ readonly class FileManager
             throw new FileManagerException(sprintf('File %s not found', $path));
         }
 
-        return file_get_contents($path);
+        $content = file_get_contents($path);
+
+        if ($content === false) {
+            throw new FileManagerException(sprintf('Error to read file %s', $path));
+        }
+
+        return $content;
     }
 
 

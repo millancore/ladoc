@@ -3,7 +3,6 @@
 namespace Lo\Tests\Unit;
 
 use Lo\Action;
-use Lo\Enum\Version;
 use Lo\Index\IndexList;
 use Lo\Index\IndexManager;
 use Lo\Index\ItemList;
@@ -18,8 +17,7 @@ use Lo\InputResolver;
  */
 class InputResolverTest extends TestCase
 {
-
-    public function test_it_can_get_main_list_action()
+    public function test_it_can_get_main_list_action(): void
     {
         $indexManager = $this->createMock(IndexManager::class);
 
@@ -31,7 +29,7 @@ class InputResolverTest extends TestCase
     }
 
 
-    public function test_it_can_get_main_list_letter_filter()
+    public function test_it_can_get_main_list_letter_filter(): void
     {
         $indexManager = $this->createMock(IndexManager::class);
 
@@ -42,7 +40,11 @@ class InputResolverTest extends TestCase
         $this->assertInstanceOf(Action\ListAction::class, $action);
     }
 
-    public function test_it_can_get_section_by_index()
+    /**
+     * @covers \Lo\Index\IndexList
+     * @covers \Lo\Index\ItemList
+     */
+    public function test_it_can_get_section_by_index(): void
     {
         $indexManager = $this->createMock(IndexManager::class);
 
@@ -60,7 +62,7 @@ class InputResolverTest extends TestCase
         $this->assertInstanceOf(Action\SectionListAction::class, $action);
     }
 
-    public function test_it_can_get_section_by_name()
+    public function test_it_can_get_section_by_name(): void
     {
         $indexManager = $this->createMock(IndexManager::class);
 
@@ -71,7 +73,7 @@ class InputResolverTest extends TestCase
         $this->assertInstanceOf(Action\SectionListAction::class, $action);
     }
 
-    public function test_it_can_search_section()
+    public function test_it_can_search_section(): void
     {
         $indexManager = $this->createMock(IndexManager::class);
 

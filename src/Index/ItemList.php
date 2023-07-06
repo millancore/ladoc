@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Lo\Index;
 
 readonly class ItemList
@@ -17,6 +19,10 @@ readonly class ItemList
         return $this->children?->count() > 0;
     }
 
+
+    /**
+     * @return array<string, mixed>
+     */
     public function toArray(): array
     {
         return [

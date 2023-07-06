@@ -9,8 +9,7 @@ use Lo\Formatter\TermwindFormatter;
  */
 class TermwindFormatterTest extends TestCase
 {
-
-    public function test_it_can_remove_style_blocks() : void
+    public function test_it_can_remove_style_blocks(): void
     {
 
         $formatter = new TermwindFormatter();
@@ -22,7 +21,7 @@ class TermwindFormatterTest extends TestCase
     }
 
 
-    public function test_it_can_set_title_styles() : void
+    public function test_it_can_set_title_styles(): void
     {
         $formatter = new TermwindFormatter();
 

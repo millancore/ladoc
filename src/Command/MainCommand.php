@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Lo\Command;
 
 use League\CommonMark\Exception\CommonMarkException;
@@ -21,6 +23,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 )]
 class MainCommand extends Command
 {
+    public function __construct(
+        private readonly string $rootPath
+    )
+    {
+        parent::__construct();
+    }
+
     public function configure(): void
     {
 
@@ -69,13 +78,14 @@ class MainCommand extends Command
 
         $fileManager = new FileManager(
             $version,
-            ROOT_APP . '/.docs',
-            ROOT_APP . '/index',
+            $this->rootPath . '/.docs',
+            $this->rootPath . '/index'
         );
 
         $indexManager = new IndexManager($fileManager);
 
         if (!$indexManager->check()) {
+            $output->writeln(sprintf('Download v%s and Indexing...', $version->value));
             (new Repository($fileManager))->check();
             $indexManager->createIndex();
         }
@@ -85,12 +95,12 @@ class MainCommand extends Command
         $action = $inputResolver->resolve($section, $query);
 
         $content = $action->execute(
-           $query,
-           ['letter' => $input->getOption('letter')]
+            $query,
+            ['letter' => $input->getOption('letter')]
         );
 
         (new Termwind(
-            new Styles(require ROOT_APP . '/styles.php')
+            new Styles(require $this->rootPath . '/styles.php')
         ))->render($content);
 
         return Command::SUCCESS;

@@ -20,7 +20,7 @@ class IndexListTest extends TestCase
         $this->assertEquals(1, $indexList->count());
     }
 
-    public function test_it_can_set_name()
+    public function test_it_can_set_name(): void
     {
         $indexList = new IndexList();
         $indexList->setName('name');
@@ -28,7 +28,7 @@ class IndexListTest extends TestCase
         $this->assertSame('name', $indexList->getName());
     }
 
-    public function test_it_can_get_by_index()
+    public function test_it_can_get_by_index(): void
     {
         $indexList = new IndexList();
         $indexList->attach(new ItemList('first title', 'first anchor'));
@@ -37,7 +37,7 @@ class IndexListTest extends TestCase
         $this->assertSame('first title', $indexList->get(0)->title);
     }
 
-    public function test_it_can_get_all_items()
+    public function test_it_can_get_all_items(): void
     {
         $indexList = new IndexList();
         $indexList->attach(new ItemList('title', 'anchor'));
@@ -47,13 +47,13 @@ class IndexListTest extends TestCase
         $this->assertCount(3, $indexList->all());
     }
 
-    public function test_it_can_validate_if_empty()
+    public function test_it_can_validate_if_empty(): void
     {
         $indexList = new IndexList();
         $this->assertTrue($indexList->isEmpty());
     }
 
-    public function test_it_can_filter_by_first_letter()
+    public function test_it_can_filter_by_first_letter(): void
     {
         $indexList = new IndexList();
         $indexList->attach(new ItemList('title', 'anchor', new IndexList()));
@@ -65,7 +65,7 @@ class IndexListTest extends TestCase
         $this->assertCount(0, $indexList->filterByLetter('a'));
     }
 
-    public function test_it_can_get_nested_item_as_array() : void
+    public function test_it_can_get_nested_item_as_array(): void
     {
         $indexList = new IndexList();
         $indexList->attach(new ItemList('child title', 'anchor', new IndexList()));
@@ -79,7 +79,7 @@ class IndexListTest extends TestCase
         ], $indexList->toArray());
     }
 
-    public function test_it_can_get_nested_items() : void
+    public function test_it_can_get_nested_items(): void
     {
         $firstLevel = new IndexList();
         $secondLevel = new IndexList();

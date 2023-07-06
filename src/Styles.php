@@ -2,16 +2,27 @@
 
 namespace Lo;
 
-class Styles
+readonly class Styles
 {
-    public string $title;
-    public string $inlineCode;
-
-    public function __construct(array $styles)
+    /**
+     * @param array<string, string> $styles
+     */
+    public function __construct(public array $styles)
     {
-        $this->title = $styles['title'];
-        $this->inlineCode = $styles['inline-code'];
+        //
     }
 
+    public function get(string $name): string
+    {
+        return $this->styles[$name];
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    public function all(): array
+    {
+        return $this->styles;
+    }
 
 }

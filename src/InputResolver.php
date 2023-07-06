@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Lo;
 
 use Lo\Action\ActionInterface;
@@ -10,21 +12,22 @@ class InputResolver
 {
     public function __construct(
         private readonly IndexManager $indexManager
-    )
-    {
+    ) {
         //
     }
 
     /**
-     * @param string $section
-     * @param array $query
+     * @param string|int $section
+     * @param array<string|int> $query
      * @return ActionInterface
      * @throws FileManagerException
      */
-    public function resolve(string $section, array $query = []): ActionInterface
+    public function resolve(string|int $section, array $query = []): ActionInterface
     {
         if (is_numeric($section)) {
-            $section = $this->indexManager->getMainIndex()->get($section)->anchor;
+            $section = $this->indexManager->getMainIndex()->get(
+                $section
+            )->anchor;
         }
 
         if ($section === 'list') {
@@ -49,7 +52,7 @@ class InputResolver
             return false;
         }
 
-        return !in_array(false, array_map(fn($item) => is_numeric($item), $query));
+        return !in_array(false, array_map(fn ($item) => is_numeric($item), $query));
     }
 
 

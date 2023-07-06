@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Lo\Action;
 
 use Lo\Index\IndexList;

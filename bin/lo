@@ -1,14 +1,16 @@
 #!/usr/bin/env php
 <?php
 
-require dirname(__DIR__) . '/bootstrap.php';
+$rootPath = dirname(__DIR__);
+
+require $rootPath . '/bootstrap.php';
 
 use Lo\Command\MainCommand;
 use Symfony\Component\Console\Application;
 
 $application = new Application();
 
-$searchCommand = new MainCommand;
+$searchCommand = new MainCommand($rootPath);
 
 $application->add($searchCommand);
 $application->setDefaultCommand($searchCommand->getName(), true);

@@ -1,6 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Lo\Enum;
+
+use InvalidArgumentException;
 
 enum Version: string
 {
@@ -42,7 +46,7 @@ enum Version: string
             }
         }
 
-        throw new \Exception(sprintf('Version %s not found', $version));
+        throw new InvalidArgumentException(sprintf('Version %s not found', $version));
     }
 
 }
