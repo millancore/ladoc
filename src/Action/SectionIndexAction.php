@@ -25,10 +25,15 @@ class SectionIndexAction implements ActionInterface
             array_map(fn ($item) => (int) $item, $query)
         );
 
-        if ($element instanceof IndexList) {
-            return  Render::sectionIndexList($element);
+        $list = Render::sectionIndexList($element->children ?? new IndexList());
+        $article = $this->indexManager->getArticle($this->section, $element->anchor);
+
+        $output = $article;
+
+        if ($list !== '') {
+            $output .= '<hr>' . $list;
         }
 
-        return  $this->indexManager->getArticle($this->section, $element->anchor);
+        return $output;
     }
 }

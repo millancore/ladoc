@@ -16,7 +16,11 @@ readonly class ItemList
 
     public function hasChildren(): bool
     {
-        return $this->children?->count() > 0;
+        if ($this->children === null) {
+            return false;
+        }
+
+        return $this->children->isEmpty() === false;
     }
 
 

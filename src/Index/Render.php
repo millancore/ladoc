@@ -27,6 +27,10 @@ class Render
 
     public static function sectionIndexList(IndexList $indexList): string
     {
+        if ($indexList->isEmpty()) {
+            return '';
+        }
+
         $html = '';
         if($indexList->getName()) {
             $html .= sprintf('<p class="title">%s</p>', $indexList->getName());

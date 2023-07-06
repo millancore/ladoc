@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Lo\Index;
 
 use Countable;
+use OutOfBoundsException;
 
 class IndexList implements Countable
 {
@@ -47,11 +48,17 @@ class IndexList implements Countable
 
     public function isEmpty(): bool
     {
-        return empty($this->items);
+        return $this->count() === 0;
     }
 
     public function get(int $index): ItemList
     {
+        if (isset($this->items[$index]) === false) {
+            throw new OutOfBoundsException(
+                sprintf('Index %d does not exist for this section', $index)
+            );
+        }
+
         return $this->items[$index];
     }
 
@@ -89,30 +96,22 @@ class IndexList implements Countable
 
     /**
      * @param array<int> $query
-     * @return IndexList|ItemList
+     * @return ItemList
      */
-    public function getNestedItems(array $query): IndexList|ItemList
+    public function getNestedItems(array $query): ItemList
     {
-        $count = count($query);
+        $firstElement = $this->get($query[0]);
 
-        $firstElement = $this->items[$query[0]];
-
-        if (!$firstElement->hasChildren()) {
+        if ($firstElement->hasChildren() === false) {
             return $firstElement;
         }
 
-        /** @var IndexList $children */
-        $children = $firstElement->children;
+        $next = array_slice($query, 1);
 
-        if ($children->count() == 1 && $count == 1) {
-            return $children->get(0);
+        if (empty($next) || is_null($firstElement->children)) {
+            return $firstElement;
         }
 
-        if($count == 1) {
-            return $children;
-        }
-
-
-        return $children->getNestedItems(array_slice($query, 1));
+        return $firstElement->children->getNestedItems(array_slice($query, 1));
     }
 }
