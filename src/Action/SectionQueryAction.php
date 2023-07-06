@@ -22,7 +22,7 @@ readonly class SectionQueryAction implements ActionInterface
             return '';
         }
 
-        $sectionPath = $this->indexManager->getIndexPath() . '/' . $this->section;
+        $sectionPath = $this->indexManager->getSectionPath($this->section);
 
         $process = new Process(['grep',
             '-rl',
