@@ -12,9 +12,12 @@
 **Ladoc** ladoc allows you to search and browse Laravel documentation in all its versions.
 
 ## Installation
+**Requires [PHP 8.2](https://php.net/releases/)**
 
 ```bash
 git clone https://github.com/millancore/ladoc.git
+
+composer install
 ```
 ## Usage
 
