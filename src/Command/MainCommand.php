@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Ladoc\Command;
 
+use Ladoc\Check;
 use League\CommonMark\Exception\CommonMarkException;
 use Ladoc\Enum\Version;
 use Ladoc\FileManager;
@@ -24,9 +25,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 class MainCommand extends Command
 {
     public function __construct(
+        private readonly string $version,
         private readonly string $rootPath,
         private readonly bool   $isTestMode = false
-    ) {
+    )
+    {
         parent::__construct();
     }
 
@@ -73,6 +76,14 @@ class MainCommand extends Command
         $query = $input->getArgument('query');
         $versionInput = $input->getOption('branch');
 
+        //Check Ladoc Version
+        if (!$this->isTestMode &&
+            !(new Check())->isLastVersion($this->version)
+        ) {
+            $output->write(
+                '<comment>There is a new version available run [composer global update "millancore/ladoc"]</comment>',
+            );
+        }
 
         $version = Version::fromValue($versionInput);
 

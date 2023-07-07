@@ -27,6 +27,7 @@
     "require": {
         "php": "^8.2",
         "ext-dom": "*",
+        "ext-curl": "*",
         "ext-libxml": "*",
         "league/commonmark": "^2.4",
         "nunomaduro/termwind": "^1.15",

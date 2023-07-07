@@ -81,6 +81,7 @@ class MainCommandTest extends TestCase
     {
         $application = new Application();
         $application->add(new MainCommand(
+            'test-version',
             ROOT_TEST.'/data',
             true
         ));
