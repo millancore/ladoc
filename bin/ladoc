@@ -2,7 +2,7 @@
 <?php
 
 $rootPath = dirname(__DIR__);
-$LadocVersion = 'v0.0.5';
+$LadocVersion = 'v0.0.6';
 
 require $rootPath . '/bootstrap.php';
 
