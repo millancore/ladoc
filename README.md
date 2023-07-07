@@ -5,6 +5,12 @@
 
 <p align="center">
     <img src="https://raw.githubusercontent.com/millancore/lo/main/art/example.png" alt="Ladoc example" height="408">
+    <p align="center">
+        <a href="https://github.com/millancore/ladoc/actions"><img alt="GitHub Workflow Status (master)" src="https://img.shields.io/github/actions/workflow/status/millancore/ladoc/tests.yml"></a>
+        <a href="https://packagist.org/packages/millancore/ladoc"><img alt="Total Downloads" src="https://img.shields.io/packagist/dt/millancore/ladoc"></a>
+        <a href="https://packagist.org/packages/millancore/ladoc"><img alt="Latest Version" src="https://img.shields.io/packagist/v/millancore/ladoc"></a>
+        <a href="https://packagist.org/packages/millancore/ladoc"><img alt="License" src="https://img.shields.io/packagist/l/millancore/ladoc"></a>
+    </p>
 </p>
 
 ------
@@ -15,13 +21,11 @@
 **Requires [PHP 8.2](https://php.net/releases/)**
 
 ```bash
-git clone https://github.com/millancore/ladoc.git
-
-composer install
+composer global require "millancore/ladoc"
 ```
 ## Usage
 
-> **Tip:** To make it easier to use, create an alias pointing to `repo-dir/bin/ladoc`, I usually use `zz` but it can be any alias.
+> **Tip:** To make it easier to use, create an alias, I usually use `zz`.
 
 ### Search
 
