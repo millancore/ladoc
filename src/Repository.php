@@ -4,14 +4,16 @@ declare(strict_types=1);
 
 namespace Ladoc;
 
-use Symfony\Component\Process\Process;
+use Ladoc\Process\ProcessFactory;
+use RuntimeException;
 
 class Repository
 {
     private const REPO_URL = 'https://github.com/laravel/docs.git';
 
     public function __construct(
-        private readonly FileManager $fileManager
+        private readonly FileManager    $fileManager,
+        private readonly ProcessFactory $processFactory
     ) {
         //
     }
@@ -37,7 +39,7 @@ class Repository
         $this->fileManager->createDirectory($this->getDir());
     }
 
-    public function download(): bool
+    private function download(): void
     {
         $command = [
             'git',
@@ -48,14 +50,13 @@ class Repository
             $this->fileManager->getDocPath(),
         ];
 
-        $process = new Process($command);
+        $process = $this->processFactory->newProcess($command);
         $process->run();
 
         if (!$process->isSuccessful()) {
-            throw new \RuntimeException($process->getErrorOutput());
+            throw new RuntimeException($process->getErrorOutput());
         }
 
-        return true;
     }
 
 

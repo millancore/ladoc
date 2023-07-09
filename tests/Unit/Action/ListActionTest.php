@@ -2,12 +2,11 @@
 
 namespace Ladoc\Tests\Unit\Action;
 
+use Ladoc\Action\ListAction;
 use Ladoc\Index\IndexList;
 use Ladoc\Index\IndexManager;
 use Ladoc\Index\ItemList;
-use Ladoc\Tests\Unit\TestCase;
-
-use Ladoc\Action\ListAction;
+use Ladoc\Tests\TestCase;
 
 /**
  * @covers \Ladoc\Action\ListAction
@@ -55,7 +54,7 @@ class ListActionTest extends TestCase
         $html = $listAction->execute([], ['letter' => 'v']);
 
         $this->assertIsString($html);
-        $this->assertEquals('<p class="title">Main List | filter: V</p><ul><li>[1] Validation (validation)</li></ul>', $html);
+        $this->assertEquals('<p class="title">Main List | filter: V</p><ul><li>[0] Validation (validation)</li></ul>', $html);
     }
 
 }

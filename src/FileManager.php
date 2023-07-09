@@ -103,6 +103,15 @@ readonly class FileManager
         $this->removeDirectory($this->getIndexPath());
     }
 
+    public function removeDocDirectory(): void
+    {
+        if (!is_dir($this->getDocPath())) {
+            return;
+        }
+
+        $this->removeDirectory($this->getDocPath());
+    }
+
     /**
      * @param string $filename
      * @return string

@@ -5,6 +5,7 @@ namespace Ladoc\Tests\Unit;
 use Ladoc\Enum\Version;
 use Ladoc\Exception\FileManagerException;
 use Ladoc\FileManager;
+use Ladoc\Tests\TestCase;
 
 /**
  * @covers \Ladoc\FileManager
