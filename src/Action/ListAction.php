@@ -19,7 +19,7 @@ class ListAction implements ActionInterface
     {
         $mainList = $this->indexManager->getMainIndex();
 
-        if($options['letter']) {
+        if(isset($options['letter'])) {
             $mainList = $mainList->filterByLetter($options['letter']);
         }
 

@@ -5,6 +5,7 @@ namespace Ladoc\Tests\Unit;
 use Ladoc\Formatter\TermwindFormatter;
 use Ladoc\Index\IndexList;
 use Ladoc\Splitter;
+use Ladoc\Tests\TestCase;
 
 /**
  * @covers \Ladoc\Splitter

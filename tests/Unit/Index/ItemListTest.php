@@ -4,7 +4,7 @@ namespace Ladoc\Tests\Unit\Index;
 
 use Ladoc\Index\IndexList;
 use Ladoc\Index\ItemList;
-use Ladoc\Tests\Unit\TestCase;
+use Ladoc\Tests\TestCase;
 
 /**
  * @covers \Ladoc\Index\ItemList

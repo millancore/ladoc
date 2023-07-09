@@ -3,6 +3,7 @@
 namespace Ladoc\Tests\Unit;
 
 use Ladoc\Formatter\TermwindFormatter;
+use Ladoc\Tests\TestCase;
 
 /**
  * @covers \Ladoc\Formatter\TermwindFormatter

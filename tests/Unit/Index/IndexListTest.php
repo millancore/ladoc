@@ -4,7 +4,7 @@ namespace Ladoc\Tests\Unit\Index;
 
 use Ladoc\Index\IndexList;
 use Ladoc\Index\ItemList;
-use Ladoc\Tests\Unit\TestCase;
+use Ladoc\Tests\TestCase;
 
 /**
  * @covers \Ladoc\Index\IndexList
@@ -61,8 +61,8 @@ class IndexListTest extends TestCase
         $indexList->attach(new ItemList('title', 'anchor', new IndexList()));
 
         $this->assertCount(3, $indexList->all());
-        $this->assertCount(3, $indexList->filterByLetter('t'));
-        $this->assertCount(0, $indexList->filterByLetter('a'));
+        $this->assertCount(0, $indexList->filterByLetter('t'));
+        $this->assertCount(3, $indexList->filterByLetter('a'));
     }
 
     public function test_it_can_get_nested_item_as_array(): void

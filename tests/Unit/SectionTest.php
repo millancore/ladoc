@@ -4,6 +4,7 @@ namespace Ladoc\Tests\Unit;
 
 use Ladoc\Index\IndexList;
 use Ladoc\Section;
+use Ladoc\Tests\TestCase;
 
 /**
  * @covers \Ladoc\Section

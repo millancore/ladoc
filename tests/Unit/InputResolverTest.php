@@ -7,6 +7,7 @@ use Ladoc\Index\IndexList;
 use Ladoc\Index\IndexManager;
 use Ladoc\Index\ItemList;
 use Ladoc\InputResolver;
+use Ladoc\Tests\TestCase;
 
 /**
  * @covers \Ladoc\InputResolver

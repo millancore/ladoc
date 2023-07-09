@@ -71,7 +71,7 @@ class IndexManager
     public function getSectionIndex(string $section): IndexList
     {
         if (!$this->sectionIndexFileExist($section)) {
-            throw new Exception('Index section file not found');
+            throw new Exception(sprintf('Section %s not found', $section));
         }
 
         return unserialize($this->fileManager->getFileContent(

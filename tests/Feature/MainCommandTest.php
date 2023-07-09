@@ -2,10 +2,10 @@
 
 namespace Ladoc\Tests\Feature;
 
+use Ladoc\Command\MainCommand;
 use Ladoc\Enum\Version;
 use Ladoc\FileManager;
-use Ladoc\Tests\Unit\TestCase;
-use Ladoc\Command\MainCommand;
+use Ladoc\Tests\TestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 
@@ -20,7 +20,9 @@ use Symfony\Component\Console\Tester\CommandTester;
  * @uses \Ladoc\Formatter\TermwindFormatter
  * @uses \Ladoc\Splitter
  * @uses \Ladoc\Section
+ * @uses \Ladoc\Process\ProcessFactory
  */
+
 class MainCommandTest extends TestCase
 {
     protected function setUp(): void
@@ -88,7 +90,7 @@ class MainCommandTest extends TestCase
 
         $application->setAutoExit(false);
 
-        return new CommandTester($application->find('search'));
+        return new CommandTester($application->find('ladoc'));
     }
 
 }

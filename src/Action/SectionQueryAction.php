@@ -5,32 +5,35 @@ declare(strict_types=1);
 namespace Ladoc\Action;
 
 use Ladoc\Index\IndexManager;
-use Symfony\Component\Process\Process;
+use Ladoc\Process\ProcessFactory;
 
 readonly class SectionQueryAction implements ActionInterface
 {
     public function __construct(
         private IndexManager $indexManager,
+        private ProcessFactory $processFactory,
         private string $section
     ) {
         //
     }
 
+    /**
+     * @param array<int|string, string> $query
+     * @param array<string, mixed> $options
+     * @return string
+     */
     public function execute(array $query, array $options = []): string
     {
-        if(!$this->indexManager->sectionIndexFileExist($this->section)) {
-            return '';
-        }
-
         $sectionPath = $this->indexManager->getSectionPath($this->section);
 
-        $process = new Process(['grep',
+        $process = $this->processFactory->newProcess(['grep',
             '-rl',
             $sectionPath,
             '--include=*.html',
             '-ie',
             implode(' ', $query)
         ]);
+
         $process->run();
 
         $output = explode("\n", $process->getOutput());
