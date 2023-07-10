@@ -3,10 +3,13 @@ FROM composer:2.5.8 AS composer
 WORKDIR /app
 
 COPY composer.json composer.json
+COPY composer.lock composer.lock
 
-RUN composer install --no-dev --no-scripts --no-autoloader --no-interaction --no-progress --no-suggest --prefer-dist
+RUN composer install --no-dev --no-scripts --no-interaction --no-progress --prefer-dist
 
 FROM php:8.2-cli-alpine3.18
+
+RUN apk add --no-cache git grep
 
 WORKDIR /app
 

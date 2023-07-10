@@ -1,11 +1,9 @@
-
-<h1 align="center" style="border:none !important">
-    <code>laravel documentation for Console</code>
-</h1>
+# laravel documentation for `Console`
 
 <p align="center">
     <img src="https://raw.githubusercontent.com/millancore/lo/main/art/example.png" alt="Ladoc example" height="408">
     <p align="center">
+        <a href="https://github.com/millancore/ladoc/actions"><img alt="GitHub Workflow Status (master)" src="https://img.shields.io/github/actions/workflow/status/millancore/ladoc/test.yml"></a>
         <a href="https://packagist.org/packages/millancore/ladoc"><img alt="Total Downloads" src="https://img.shields.io/packagist/dt/millancore/ladoc"></a>
         <a href="https://packagist.org/packages/millancore/ladoc"><img alt="Latest Version" src="https://img.shields.io/packagist/v/millancore/ladoc"></a>
         <a href="https://packagist.org/packages/millancore/ladoc"><img alt="License" src="https://img.shields.io/packagist/l/millancore/ladoc"></a>
@@ -14,7 +12,7 @@
 
 ------
 
-**Ladoc** ladoc allows you to search and browse Laravel documentation in all its versions.
+**Ladoc** allows you to search and browse Laravel documentation in all its versions.
 
 ## Installation
 **Requires [PHP 8.2](https://php.net/releases/)**
@@ -22,6 +20,18 @@
 ```bash
 composer global require "millancore/ladoc"
 ```
+
+### Docker
+```bash
+ docker run -td --name ladoc millancore/ladoc
+```
+
+Uses:
+```bash
+docker exec -it ladoc zz # (zz or ladoc)
+```
+> you can also use `sh` and use the Ladoc from within the container.
+
 ## Usage
 
 > **Tip:** To make it easier to use, create an alias, I usually use `zz`.
@@ -61,8 +71,8 @@ Result:
 ```
  Main List | filter: V
 
-• [85] Validation (validation)
-• [87] Views (views)
+• [0] Validation (validation)
+• [1] Views (views)
 ```
 
 ### Navigation System
