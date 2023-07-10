@@ -48,9 +48,9 @@ class FileManagerTest extends TestCase
     {
         $fileManager = $this->newFileManager();
 
-        $this->expectException(FileManagerException::class);
+        $this->expectException(\Ladoc\Exception\FileManagerException::class);
 
-        $fileManager->getFileContent('section/test.html');
+        $fileManager->getFileContent('no-section/test.invalid');
     }
 
     public function test_get_files_from_repo_directory(): void
