@@ -32,9 +32,8 @@ composer global require "millancore/ladoc"
 
 Uses:
 ```bash
-docker exec -it ladoc zz # (zz or ladoc)
+docker exec -it ladoc sh # (and then zz or ladoc)
 ```
-> you can also use `sh` and use the Ladoc from within the container.
 
 ## Usage
 
