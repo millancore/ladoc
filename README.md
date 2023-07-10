@@ -1,4 +1,4 @@
-# laravel documentation for `Console`
+# Laravel Documentation for `Console`
 
 <p align="center">
     <img src="https://raw.githubusercontent.com/millancore/lo/main/art/example.png" alt="Ladoc example" height="408">
