@@ -15,13 +15,17 @@
 **Ladoc** allows you to search and browse Laravel documentation in all its versions.
 
 ## Installation
+
+### Using Composer
 **Requires [PHP 8.2](https://php.net/releases/)**
 
 ```bash
 composer global require "millancore/ladoc"
 ```
 
-### Docker
+----
+
+### or Using Docker
 ```bash
  docker run -td --name ladoc millancore/ladoc
 ```
@@ -62,7 +66,7 @@ Result:
 ... 
 ```
 ### Filter Main List
-to simplify the navigation you can filter the list by initial letter 
+To simplify the navigation you can filter main list with '--letter' or `-l` and initial letter.
 
 ```bash
 ladoc -lv
