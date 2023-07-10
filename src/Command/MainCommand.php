@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Ladoc\Command;
 
-use Ladoc\Check;
 use Ladoc\Process\ProcessFactory;
 use League\CommonMark\Exception\CommonMarkException;
 use Ladoc\Enum\Version;
@@ -75,15 +74,6 @@ class MainCommand extends Command
         $section = $input->getArgument('section');
         $query = $input->getArgument('query');
         $versionInput = $input->getOption('branch');
-
-        //Check Ladoc Version
-        if (!$this->isTestMode &&
-            !(new Check())->isLastVersion($this->version)
-        ) {
-            $output->write(
-                '<comment>There is a new version available run [composer global update "millancore/ladoc"]</comment>',
-            );
-        }
 
         $version = Version::fromValue($versionInput);
 
