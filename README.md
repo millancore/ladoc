@@ -117,7 +117,7 @@ You can search directly in a section using its index. `ladoc 4 @once` it's equal
 
 ### Versions
 
-Ladoc allows you to search all versions of Laravel, just use `--brach` or `-b` to define the version you want to use.
+Ladoc allows you to search all versions of Laravel, just use `--branch` or `-b` to define the version you want to use.
 
 ```bash
 ladoc -b5.2 blade
