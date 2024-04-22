@@ -1,24 +1,43 @@
-
-<h1 align="center" style="border:none !important">
-    <code>laravel documentation for Console</code>
-</h1>
+# Laravel Documentation for `Console`
 
 <p align="center">
     <img src="https://raw.githubusercontent.com/millancore/lo/main/art/example.png" alt="Ladoc example" height="408">
+    <p align="center">
+        <a href="https://github.com/millancore/ladoc/actions"><img alt="GitHub Workflow Status (master)" src="https://img.shields.io/github/actions/workflow/status/millancore/ladoc/test.yml"></a>
+        <a href="https://packagist.org/packages/millancore/ladoc"><img alt="Total Downloads" src="https://img.shields.io/packagist/dt/millancore/ladoc"></a>
+        <a href="https://packagist.org/packages/millancore/ladoc"><img alt="Latest Version" src="https://img.shields.io/packagist/v/millancore/ladoc"></a>
+        <a href="https://packagist.org/packages/millancore/ladoc"><img alt="License" src="https://img.shields.io/packagist/l/millancore/ladoc"></a>
+    </p>
 </p>
 
 ------
 
-**Ladoc** ladoc allows you to search and browse Laravel documentation in all its versions.
+**Ladoc** allows you to search and browse Laravel documentation in all its versions.
 
 ## Installation
 
+### Using Composer
+**Requires [PHP 8.2](https://php.net/releases/)**
+
 ```bash
-git clone https://github.com/millancore/ladoc.git
+composer global require "millancore/ladoc"
 ```
+
+----
+
+### or Using Docker
+```bash
+ docker run -td --name ladoc millancore/ladoc
+```
+
+Uses:
+```bash
+docker exec -it ladoc sh # (and then zz or ladoc)
+```
+
 ## Usage
 
-> **Tip:** To make it easier to use, create an alias pointing to `repo-dir/bin/ladoc`, I usually use `zz` but it can be any alias.
+> **Tip:** To make it easier to use, create an alias, I usually use `zz`.
 
 ### Search
 
@@ -46,7 +65,7 @@ Result:
 ... 
 ```
 ### Filter Main List
-to simplify the navigation you can filter the list by initial letter 
+To simplify the navigation you can filter main list with '--letter' or `-l` and initial letter.
 
 ```bash
 ladoc -lv
@@ -55,8 +74,8 @@ Result:
 ```
  Main List | filter: V
 
-• [85] Validation (validation)
-• [87] Views (views)
+• [0] Validation (validation)
+• [1] Views (views)
 ```
 
 ### Navigation System
@@ -98,7 +117,7 @@ You can search directly in a section using its index. `ladoc 4 @once` it's equal
 
 ### Versions
 
-Ladoc allows you to search all versions of Laravel, just use `--brach` or `-b` to define the version you want to use.
+Ladoc allows you to search all versions of Laravel, just use `--branch` or `-b` to define the version you want to use.
 
 ```bash
 ladoc -b5.2 blade

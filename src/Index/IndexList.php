@@ -24,9 +24,9 @@ class IndexList implements Countable
         return $this;
     }
 
-    public function add(int $index, ItemList $itemList): self
+    public function add(ItemList $itemList): self
     {
-        $this->items[$index] = $itemList;
+        $this->items[] = $itemList;
         return $this;
     }
 
@@ -84,9 +84,9 @@ class IndexList implements Countable
             sprintf('%s | filter: %s', $this->name, strtoupper($letter))
         );
 
-        foreach ($this->items as $index => $item) {
-            if (strtolower($item->title[0]) == $letter) {
-                $indexList->add($index, $item);
+        foreach ($this->items as $item) {
+            if (strtolower($item->anchor[0]) == $letter) {
+                $indexList->add($item);
             }
         }
 

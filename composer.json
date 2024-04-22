@@ -9,6 +9,9 @@
             "email": "juanes14569@gmail.com"
         }
     ],
+    "bin": [
+        "bin/ladoc"
+    ],
     "autoload": {
         "psr-4": {
             "Ladoc\\" : "src/"
@@ -19,9 +22,12 @@
             "Ladoc\\Tests\\" : "tests/"
         }
     },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
     "require": {
         "php": "^8.2",
         "ext-dom": "*",
+        "ext-curl": "*",
         "ext-libxml": "*",
         "league/commonmark": "^2.4",
         "nunomaduro/termwind": "^1.15",
@@ -35,11 +41,10 @@
         "phpstan/phpstan": "^1.10"
     },
     "scripts": {
-        "test": "phpun",
+        "test": "phpunit",
         "coverage": "phpunit --coverage-html coverage",
         "cs": "php-cs-fixer fix src --rules=@PSR12 --dry-run --diff",
         "cs-fix": "php-cs-fixer fix src --rules=@PSR12",
-        "phpstan": "phpstan analyse --no-progress --level=8 src tests",
-        "phpstan-baseline": "phpstan analyse --level=8 src tests --generate-baseline phpstan-baseline.neon"
+        "phpstan": "phpstan analyse --no-progress --level=8 src tests"
     }
 }

@@ -4,6 +4,7 @@ namespace Ladoc\Tests\Unit;
 
 use Ladoc\Styles;
 use Ladoc\Termwind;
+use Ladoc\Tests\TestCase;
 
 /**
  * @covers \Ladoc\Termwind

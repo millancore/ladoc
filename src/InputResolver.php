@@ -7,6 +7,7 @@ namespace Ladoc;
 use Ladoc\Action\ActionInterface;
 use Ladoc\Exception\FileManagerException;
 use Ladoc\Index\IndexManager;
+use Ladoc\Process\ProcessFactory;
 
 class InputResolver
 {
@@ -19,15 +20,17 @@ class InputResolver
     /**
      * @param string|int $section
      * @param array<string|int> $query
+     * @param array<string, mixed> $options
      * @return ActionInterface
      * @throws FileManagerException
      */
-    public function resolve(string|int $section, array $query = []): ActionInterface
-    {
+    public function resolve(
+        string|int $section,
+        array      $query = [],
+        array      $options = []
+    ): ActionInterface {
         if (is_numeric($section)) {
-            $section = $this->indexManager->getMainIndex()->get(
-                (int) $section
-            )->anchor;
+            $section = $this->resolveNumericalSection((int) $section, $options);
         }
 
         if ($section === 'list') {
@@ -42,7 +45,29 @@ class InputResolver
             return new Action\SectionIndexAction($this->indexManager, $section);
         }
 
-        return new Action\SectionQueryAction($this->indexManager, $section);
+        return new Action\SectionQueryAction(
+            $this->indexManager,
+            new ProcessFactory(),
+            $section
+        );
+    }
+
+
+    /**
+     * @param int $section
+     * @param array<string, mixed> $option
+     * @return string
+     * @throws FileManagerException
+     */
+    private function resolveNumericalSection(int $section, array $option = []): string
+    {
+        $mainList = $this->indexManager->getMainIndex();
+
+        if (isset($option['letter'])) {
+            $mainList = $this->indexManager->getMainIndex()->filterByLetter($option['letter']);
+        }
+
+        return $mainList->get($section)->anchor;
     }
 
 

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Ladoc\Command;
 
+use Ladoc\Process\ProcessFactory;
 use League\CommonMark\Exception\CommonMarkException;
 use Ladoc\Enum\Version;
 use Ladoc\FileManager;
@@ -19,11 +20,12 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 #[AsCommand(
-    name: 'search'
+    name: 'ladoc'
 )]
 class MainCommand extends Command
 {
     public function __construct(
+        private readonly string $version,
         private readonly string $rootPath,
         private readonly bool   $isTestMode = false
     ) {
@@ -59,7 +61,7 @@ class MainCommand extends Command
             'l',
             InputArgument::OPTIONAL,
             'Filter Main list by letter',
-            ''
+            null
         );
     }
 
@@ -72,7 +74,6 @@ class MainCommand extends Command
         $section = $input->getArgument('section');
         $query = $input->getArgument('query');
         $versionInput = $input->getOption('branch');
-
 
         $version = Version::fromValue($versionInput);
 
@@ -94,17 +95,19 @@ class MainCommand extends Command
 
             $output->writeln(sprintf('Download v%s and Indexing...', $version->value));
 
-            (new Repository($fileManager))->check();
+            (new Repository(
+                $fileManager,
+                new ProcessFactory(),
+            ))->check();
             $indexManager->createIndex();
         }
 
         $inputResolver = new InputResolver($indexManager);
-
-        $action = $inputResolver->resolve($section, $query);
+        $action = $inputResolver->resolve($section, $query, $input->getOptions());
 
         $content = $action->execute(
             $query,
-            ['letter' => $input->getOption('letter')]
+            $input->getOptions()
         );
 
         if ($this->isTestMode) {

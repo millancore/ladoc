@@ -2,15 +2,22 @@
 <?php
 
 $rootPath = dirname(__DIR__);
+$LadocVersion = 'v0.0.7';
 
 require $rootPath . '/bootstrap.php';
 
 use Ladoc\Command\MainCommand;
 use Symfony\Component\Console\Application;
 
-$application = new Application();
+$application = new Application(
+    'Ladoc',
+    $LadocVersion
+);
 
-$searchCommand = new MainCommand($rootPath);
+$searchCommand = new MainCommand(
+        $LadocVersion,
+        $rootPath
+);
 
 $application->add($searchCommand);
 $application->setDefaultCommand($searchCommand->getName(), true);

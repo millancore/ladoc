@@ -6,7 +6,7 @@ use Ladoc\Enum\Version;
 use Ladoc\FileManager;
 use Ladoc\Index\IndexList;
 use Ladoc\Index\IndexManager;
-use Ladoc\Tests\Unit\TestCase;
+use Ladoc\Tests\TestCase;
 
 /**
  * @covers \Ladoc\Index\IndexManager

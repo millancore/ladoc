@@ -3,7 +3,7 @@
 namespace Ladoc\Tests\Unit\Enum;
 
 use Ladoc\Enum\Version;
-use Ladoc\Tests\Unit\TestCase;
+use Ladoc\Tests\TestCase;
 
 /**
  * @covers \Ladoc\Enum\Version

@@ -6,7 +6,7 @@ use Ladoc\Action\SectionListAction;
 use Ladoc\Index\IndexList;
 use Ladoc\Index\IndexManager;
 use Ladoc\Index\ItemList;
-use Ladoc\Tests\Unit\TestCase;
+use Ladoc\Tests\TestCase;
 
 /**
  * @covers \Ladoc\Action\SectionListAction
