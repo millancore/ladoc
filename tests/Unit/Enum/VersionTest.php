@@ -12,7 +12,7 @@ class VersionTest extends TestCase
 {
     public function test_it_can_return_latest_version(): void
     {
-        $this->assertEquals('10.x', Version::getLatestVersion()->value);
+        $this->assertEquals('11.x', Version::getLatestVersion()->value);
     }
 
     public function test_it_can_return_version_from_value(): void
