@@ -102,6 +102,20 @@ class MainCommand extends Command
             $indexManager->createIndex();
         }
 
+        if (!is_numeric($section) && $section !== 'list' && !$indexManager->sectionExists($section)) {
+            $output->writeln(sprintf('<error>Section "%s" not found.</error>', $section));
+
+            $suggestions = $this->suggestSections($section, $indexManager);
+
+            if (!empty($suggestions)) {
+                $output->writeln(sprintf('Did you mean: %s?', implode(', ', $suggestions)));
+            }
+
+            $output->writeln('Run "ladoc" without arguments to list all sections.');
+
+            return Command::FAILURE;
+        }
+
         $inputResolver = new InputResolver($indexManager);
         $action = $inputResolver->resolve($section, $query, $input->getOptions());
 
@@ -116,13 +130,42 @@ class MainCommand extends Command
         }
 
         // @codeCoverageIgnoreStart
-        (new Termwind(
+        $rendered = (new Termwind(
             new Styles(require $this->rootPath . '/styles.php')
-        ))->render($content);
+        ))->renderToString($content);
+
+        if (!$output->isDecorated()) {
+            $rendered = (string) preg_replace(
+                '/\e\[[0-9;?]*[ -\/]*[@-~]|\e\][^\e\a]*(?:\e\\\\|\a)/',
+                '',
+                $rendered
+            );
+        }
+
+        $output->write($rendered, false, OutputInterface::OUTPUT_RAW);
 
         return Command::SUCCESS;
         // @codeCoverageIgnoreEnd
     }
 
+    /**
+     * @return array<string>
+     */
+    private function suggestSections(string $section, IndexManager $indexManager): array
+    {
+        $anchors = array_map(
+            fn ($item) => $item->anchor,
+            $indexManager->getMainIndex()->all()
+        );
+
+        $suggestions = array_filter(
+            $anchors,
+            fn ($anchor) => str_contains($anchor, $section) || levenshtein($anchor, $section) <= 3
+        );
+
+        sort($suggestions);
+
+        return array_values($suggestions);
+    }
 
 }

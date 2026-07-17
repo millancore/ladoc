@@ -10,7 +10,8 @@
         }
     ],
     "bin": [
-        "bin/ladoc"
+        "bin/ladoc",
+        "bin/ladoc-mcp"
     ],
     "autoload": {
         "psr-4": {

@@ -8,6 +8,8 @@ use InvalidArgumentException;
 
 enum Version: string
 {
+    case V13 = '13.x';
+    case V12 = '12.x';
     case V11 = '11.x';
     case V10 = '10.x';
     case V9 = '9.x';
@@ -29,7 +31,7 @@ enum Version: string
 
     public static function getLatestVersion(): Version
     {
-        return self::V11;
+        return self::V13;
     }
 
     /**

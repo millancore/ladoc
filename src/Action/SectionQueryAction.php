@@ -24,28 +24,80 @@ readonly class SectionQueryAction implements ActionInterface
      */
     public function execute(array $query, array $options = []): string
     {
-        $sectionPath = $this->indexManager->getSectionPath($this->section);
+        $searchTerm = implode(' ', $query);
 
-        $process = $this->processFactory->newProcess(['grep',
-            '-rl',
-            $sectionPath,
-            '--include=*.html',
-            '-ie',
-            implode(' ', $query)
-        ]);
+        $files = $this->grepFiles(
+            $this->indexManager->getSectionPath($this->section),
+            $searchTerm
+        );
 
-        $process->run();
+        if (empty($files)) {
+            return $this->renderNoResults($searchTerm);
+        }
 
-        $output = explode("\n", $process->getOutput());
-        $output = array_filter($output);
-
-        $output = array_reverse($output);
+        $files = array_reverse($files);
 
         $content = '';
-        foreach ($output as $file) {
+        foreach ($files as $file) {
             $content .= file_get_contents($file);
         }
 
         return $content;
+    }
+
+    /**
+     * @return array<string>
+     */
+    private function grepFiles(string $path, string $searchTerm): array
+    {
+        $process = $this->processFactory->newProcess(['grep',
+            '-rl',
+            $path,
+            '--include=*.html',
+            '-ie',
+            $searchTerm
+        ]);
+
+        $process->run();
+
+        return array_filter(explode("\n", $process->getOutput()));
+    }
+
+    private function renderNoResults(string $searchTerm): string
+    {
+        $searchTerm = htmlspecialchars($searchTerm);
+
+        $message = sprintf(
+            '<p>No results for "%s" in section "%s".</p>',
+            $searchTerm,
+            $this->section
+        );
+
+        $otherSections = $this->sectionsWithMatches($searchTerm);
+
+        if (empty($otherSections)) {
+            return $message . '<p>No other section contains this term.</p>';
+        }
+
+        return $message . sprintf(
+            '<p>Sections with matches: %s</p><p>Try: ladoc %s %s</p>',
+            implode(', ', $otherSections),
+            $otherSections[0],
+            $searchTerm
+        );
+    }
+
+    /**
+     * @return array<string>
+     */
+    private function sectionsWithMatches(string $searchTerm): array
+    {
+        $files = $this->grepFiles($this->indexManager->getIndexPath(), $searchTerm);
+
+        $sections = array_map(fn ($file) => basename(dirname($file)), $files);
+        $sections = array_unique(array_diff($sections, [$this->section]));
+        sort($sections);
+
+        return array_values($sections);
     }
 }

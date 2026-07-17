@@ -4,7 +4,11 @@ declare(strict_types=1);
 
 namespace Ladoc;
 
+use Symfony\Component\Console\Output\BufferedOutput;
+use Symfony\Component\Console\Output\OutputInterface;
+
 use function Termwind\render;
+use function Termwind\renderUsing;
 use function Termwind\style;
 
 readonly class Termwind
@@ -34,6 +38,19 @@ readonly class Termwind
     {
         $this->loadStyles();
         render(sprintf('<div>%s</div>', $html));
+    }
+
+    public function renderToString(string $html): string
+    {
+        $this->loadStyles();
+
+        $buffer = new BufferedOutput(OutputInterface::VERBOSITY_NORMAL, true);
+
+        renderUsing($buffer);
+        render(sprintf('<div>%s</div>', $html));
+        renderUsing(null);
+
+        return $buffer->fetch();
     }
 
 }

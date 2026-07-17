@@ -124,6 +124,69 @@ ladoc -b5.2 blade
 ```
 > If no version is set, use the latest one.
 
+## Use with AI tools
+
+Ladoc can be used by AI coding agents (Claude Code, Cursor, etc.) to look up accurate,
+version-specific Laravel documentation. There are two ways to connect it.
+
+### MCP Server
+
+Ladoc ships with an [MCP](https://modelcontextprotocol.io) server (`ladoc-mcp`, stdio transport)
+that exposes three tools:
+
+| Tool | Description |
+|------|-------------|
+| `list_sections` | List all sections of the documentation |
+| `get_section` | Get the topic index of a section |
+| `search_docs` | Search a section and return the matching articles |
+
+All tools accept an optional `version` (e.g. `"12.x"`, defaults to the latest).
+
+**Claude Code**
+
+```bash
+claude mcp add laravel-docs -- ladoc-mcp
+```
+
+**Cursor, Windsurf, and other MCP clients**
+
+Add to your client's MCP configuration (e.g. `.cursor/mcp.json`):
+
+```json
+{
+    "mcpServers": {
+        "laravel-docs": {
+            "command": "ladoc-mcp"
+        }
+    }
+}
+```
+
+> `ladoc-mcp` is installed by `composer global require millancore/ladoc`. If your composer
+> global bin directory is not in `PATH`, use the full path, e.g.
+> `~/.config/composer/vendor/bin/ladoc-mcp`.
+
+### Agent Skill (CLI)
+
+Any agent that can run shell commands can use the `ladoc` CLI directly — output is plain
+text (no ANSI codes) when piped. A ready-made skill for Claude Code is included in
+[`skills/laravel-docs`](skills/laravel-docs/SKILL.md); install it with:
+
+```bash
+mkdir -p ~/.claude/skills
+cp -r "$(composer global config home)/vendor/millancore/ladoc/skills/laravel-docs" ~/.claude/skills/
+```
+
+For other agents, add the equivalent to your instructions file (`AGENTS.md`, rules, etc.):
+
+```
+To look up Laravel documentation use the ladoc CLI:
+- `ladoc` lists all sections (names in parentheses).
+- `ladoc <section> <query>` searches a section, e.g. `ladoc blade @once`.
+- Add `-b <version>` for a specific Laravel version, e.g. `ladoc -b 11.x eloquent-relationships hasMany`.
+- On no results, ladoc suggests the sections that contain the term.
+```
+
 ---
 
 Ladoc is an open-sourced software licensed under the **[MIT license](https://opensource.org/licenses/MIT)**.

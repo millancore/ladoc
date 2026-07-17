@@ -7,6 +7,7 @@ use Ladoc\Enum\Version;
 use Ladoc\FileManager;
 use Ladoc\Tests\TestCase;
 use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Tester\CommandTester;
 
 /**
@@ -55,7 +56,7 @@ class MainCommandTest extends TestCase
         $output = $commandTester->getDisplay();
 
         $this->assertStringContainsString('Main List | filter: A', $output);
-        $this->assertStringContainsString('[0] Artisan Console (artisan)', $output);
+        $this->assertStringContainsString('Artisan Console (artisan)', $output);
 
     }
 
@@ -77,6 +78,51 @@ class MainCommandTest extends TestCase
         $output = $commandTester->getDisplay();
 
         $this->assertStringContainsString('Tinker (REPL)', $output);
+    }
+
+    /**
+     * @uses \Ladoc\Index\IndexList
+     * @uses \Ladoc\Index\ItemList
+     */
+    public function test_error_on_unknown_section(): void
+    {
+        $commandTester = $this->getCommandTester();
+
+        $statusCode = $commandTester->execute([
+            'section' => 'artisann',
+            'query' => ['repl'],
+        ]);
+
+        $this->assertSame(Command::FAILURE, $statusCode);
+
+        $output = $commandTester->getDisplay();
+
+        $this->assertStringContainsString('Section "artisann" not found.', $output);
+        $this->assertStringContainsString('Did you mean: artisan?', $output);
+        $this->assertStringContainsString('Run "ladoc" without arguments to list all sections.', $output);
+    }
+
+    /**
+     * @uses \Ladoc\Action\SectionQueryAction
+     * @uses \Ladoc\Index\IndexList
+     * @uses \Ladoc\Index\ItemList
+     */
+    public function test_it_reports_empty_search_and_suggests_other_sections(): void
+    {
+        $commandTester = $this->getCommandTester();
+
+        $statusCode = $commandTester->execute([
+            'section' => 'artisan',
+            'query' => ['hasMany'],
+        ]);
+
+        $this->assertSame(Command::SUCCESS, $statusCode);
+
+        $output = $commandTester->getDisplay();
+
+        $this->assertStringContainsString('No results for "hasMany" in section "artisan".', $output);
+        $this->assertStringContainsString('Sections with matches:', $output);
+        $this->assertStringContainsString('Try: ladoc', $output);
     }
 
     private function getCommandTester(): CommandTester

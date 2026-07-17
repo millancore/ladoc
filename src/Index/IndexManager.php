@@ -84,6 +84,16 @@ class IndexManager
         return $this->fileManager->getIndexPath() . '/' . $section;
     }
 
+    public function getIndexPath(): string
+    {
+        return $this->fileManager->getIndexPath();
+    }
+
+    public function sectionExists(string $section): bool
+    {
+        return is_dir($this->getSectionPath($section));
+    }
+
 
     public function indexFolderExist(): bool
     {
