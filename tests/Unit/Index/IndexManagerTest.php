@@ -106,6 +106,22 @@ class IndexManagerTest extends TestCase
 
 
 
+    public function test_it_skips_empty_doc_files(): void
+    {
+        $emptyFile = ROOT_TEST . '/data/.docs/10.x/apis.md';
+        file_put_contents($emptyFile, '');
+
+        try {
+            $this->refreshIndex();
+        } finally {
+            unlink($emptyFile);
+        }
+
+        $this->assertFalse(
+            $this->indexManager->sectionExists('apis')
+        );
+    }
+
     private function refreshIndex(): void
     {
         $this->fileManager->removeIndexDirectory();

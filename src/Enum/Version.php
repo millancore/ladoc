@@ -49,7 +49,39 @@ enum Version: string
             }
         }
 
-        throw new InvalidArgumentException(sprintf('Version %s not found', $version));
+        throw new InvalidArgumentException(self::notFoundMessage((string) $version));
+    }
+
+    private static function notFoundMessage(string $version): string
+    {
+        $message = sprintf('Version %s not found.', $version);
+
+        if (!preg_match('/^(\d+)/', $version, $match)) {
+            return $message;
+        }
+
+        $available = self::withMajorVersion((int) $match[1]);
+
+        if (!empty($available)) {
+            $message .= sprintf(
+                ' Available %s.x versions: %s',
+                $match[1],
+                implode(', ', $available)
+            );
+        }
+
+        return $message;
+    }
+
+    /**
+     * @return array<string>
+     */
+    public static function withMajorVersion(int $major): array
+    {
+        return array_values(array_filter(
+            array_map(fn (Version $case) => $case->value, self::cases()),
+            fn (string $value) => str_starts_with($value, $major . '.')
+        ));
     }
 
 }

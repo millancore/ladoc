@@ -133,16 +133,6 @@ mkdir -p ~/.claude/skills
 cp -r "$(composer global config home)/vendor/millancore/ladoc/skills/laravel-docs" ~/.claude/skills/
 ```
 
-For other agents, add the equivalent to your instructions file (`AGENTS.md`, rules, etc.):
-
-```
-To look up Laravel documentation use the ladoc CLI:
-- `ladoc` lists all sections (names in parentheses).
-- `ladoc <section> <query>` searches a section, e.g. `ladoc blade @once`.
-- Add `-b <version>` for a specific Laravel version, e.g. `ladoc -b 11.x eloquent-relationships hasMany`.
-- On no results, ladoc suggests the sections that contain the term.
-```
-
 ## Installation
 
 ### Using Composer

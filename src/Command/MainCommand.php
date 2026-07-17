@@ -75,7 +75,12 @@ class MainCommand extends Command
         $query = $input->getArgument('query');
         $versionInput = $input->getOption('branch');
 
-        $version = Version::fromValue($versionInput);
+        try {
+            $version = Version::fromValue($versionInput);
+        } catch (\InvalidArgumentException $exception) {
+            $output->writeln(sprintf('<error>%s</error>', $exception->getMessage()));
+            return Command::FAILURE;
+        }
 
         if ($version !== Version::getLatestVersion()) {
             $output->writeln(
@@ -111,7 +116,11 @@ class MainCommand extends Command
                 $output->writeln(sprintf('Did you mean: %s?', implode(', ', $suggestions)));
             }
 
-            $output->writeln('Run "ladoc" without arguments to list all sections.');
+            $listCommand = $version === Version::getLatestVersion()
+                ? 'ladoc'
+                : sprintf('ladoc -b %s', $version->value);
+
+            $output->writeln(sprintf('Run "%s" without arguments to list all sections.', $listCommand));
 
             return Command::FAILURE;
         }

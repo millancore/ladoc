@@ -120,7 +120,12 @@ class IndexManager
         $markdownContent = file_get_contents($file);
 
         if($markdownContent === false) {
-            throw new FileManagerException(sprintf('File %s is empty', $file));
+            throw new FileManagerException(sprintf('Error to read file %s', $file));
+        }
+
+        // Some doc versions ship empty files (e.g. apis.md in 5.4)
+        if (trim($markdownContent) === '') {
+            return;
         }
 
         $section = pathinfo($file, PATHINFO_FILENAME);
