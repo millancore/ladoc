@@ -20,3 +20,4 @@ ENV TERM=xterm-256color
 
 RUN ln -s /app/bin/ladoc /usr/local/bin/ladoc
 RUN ln -s /app/bin/ladoc /usr/local/bin/zz
+RUN ln -s /app/bin/ladoc-mcp /usr/local/bin/ladoc-mcp
